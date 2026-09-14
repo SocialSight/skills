@@ -54,9 +54,3 @@ They chain: import with `media-refs`, then generate a still (`photo-modes`) or a
 | Quote credits before spending | `video-generation` / `photo-modes` | `get_cost: true` returns `{ credits, model_id, job_type }` |
 | Studio / lifestyle / editorial still | `photo-modes` | Prompts are written in full — no backend enhancer |
 | After submit | either generation skill | Report `job_id` and stop. Do not call `job_status` |
-
-## Not in this release
-
-There is no `model-catalog` skill. The catalog is queryable via `models_explore`; a markdown copy would drift.
-
-There is no `shot-planning` skill yet. SEEDANCE_2_5 accepts up to 30 seconds, so most deliverables fit in a single generation and grouping / join-frame logic goes unused. **That is the next skill to add** if longer deliverables or short-duration models become common.
