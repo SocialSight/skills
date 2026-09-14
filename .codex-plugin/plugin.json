@@ -1,0 +1,38 @@
+{
+  "name": "socialsight",
+  "version": "0.1.0",
+  "description": "SocialSight MCP skills for importing media, generating video, and writing full photographic prompts for image generation.",
+  "author": {
+    "name": "SocialSight",
+    "url": "https://socialsight.ai"
+  },
+  "homepage": "https://socialsight.ai",
+  "license": "MIT",
+  "keywords": [
+    "socialsight",
+    "mcp",
+    "image-generation",
+    "video-generation",
+    "media-upload",
+    "product-photography"
+  ],
+  "skills": "./skills",
+  "interface": {
+    "displayName": "SocialSight",
+    "shortDescription": "Generate images and video through SocialSight MCP",
+    "longDescription": "SocialSight skills turn an agent into a production client of the SocialSight MCP server. Import URLs and local files into media_id values, discover live model constraints, quote credits, submit image and video jobs, and write full photographic prompts. There is no CLI variant — the MCP server is the only transport.",
+    "developerName": "SocialSight",
+    "category": "Design",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://socialsight.ai",
+    "defaultPrompt": [
+      "Import this product photo URL and generate a studio shot",
+      "Make an 8-second video from this still",
+      "Quote the credit cost for this Seedance clip before submitting",
+      "Write a lifestyle product photo prompt and generate it"
+    ]
+  }
+}

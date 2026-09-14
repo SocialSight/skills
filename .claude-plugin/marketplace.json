@@ -1,0 +1,32 @@
+{
+  "name": "socialsight",
+  "owner": {
+    "name": "SocialSight",
+    "url": "https://socialsight.ai"
+  },
+  "plugins": [
+    {
+      "name": "socialsight",
+      "source": "./",
+      "description": "SocialSight MCP skills for importing media, generating video, and writing full photographic prompts for image generation.",
+      "version": "0.1.0",
+      "skills": [
+        {
+          "name": "media-refs",
+          "path": "skills/media-refs",
+          "invoke": "/socialsight:media-refs"
+        },
+        {
+          "name": "video-generation",
+          "path": "skills/video-generation",
+          "invoke": "/socialsight:video-generation"
+        },
+        {
+          "name": "photo-modes",
+          "path": "skills/photo-modes",
+          "invoke": "/socialsight:photo-modes"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "socialsight",
+  "version": "0.1.0",
+  "description": "SocialSight MCP skills for importing media, generating video, and writing full photographic prompts for image generation.",
+  "author": {
+    "name": "SocialSight",
+    "url": "https://socialsight.ai"
+  },
+  "homepage": "https://socialsight.ai",
+  "license": "MIT",
+  "keywords": [
+    "socialsight",
+    "mcp",
+    "image-generation",
+    "video-generation",
+    "media-upload",
+    "ai-video",
+    "ai-image"
+  ]
+}
