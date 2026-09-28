@@ -19,7 +19,7 @@ SocialSight does not enhance prompts on the backend. Write the photographic prom
 
 `generate_image` nests arguments under `params`. Discover `qualities`, `aspect_ratios`, and reference limits with `models_explore(action="get", model_id=...)` — never use schema defaults. Media refs go in `params.medias` as `[{ "value": "<media_id or completed job_id>" }]`. `role` is ignored; only `value` matters.
 
-Quote with `get_cost: true` before submit. After submit, report the `job_id` and stop. Omit `count` or set it to 1.
+Submit the real job (credits are enforced as HTTP 402). After submit, report the `job_id` and stop. Omit `count` or set it to 1.
 
 ## Pick a treatment
 
