@@ -1,7 +1,7 @@
 # SocialSight Skills
 
 [![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](./VERSION)
-[![Skills](https://img.shields.io/badge/skills-3-blueviolet.svg)](#skills)
+[![Skills](https://img.shields.io/badge/skills-4-blueviolet.svg)](#skills)
 
 Agent skills for image and video generation through the [SocialSight](https://socialsight.ai) MCP server. One set of `SKILL.md` files for Claude, a Google ADK agent, and any other client that speaks MCP. There is no CLI variant.
 
@@ -9,7 +9,7 @@ Agent skills for image and video generation through the [SocialSight](https://so
 
 Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it.
 
-Copy the three directories under `skills/` into the host skills path, or load them from this repo:
+Copy the four directories under `skills/` into the host skills path, or load them from this repo:
 
 | Client | Path |
 |---|---|
@@ -18,7 +18,7 @@ Copy the three directories under `skills/` into the host skills path, or load th
 | ADK / other | `~/.agents/skills/` or `load_skills_from_dir("skills")` |
 
 ```bash
-cp -R skills/media-refs skills/video-generation skills/photo-modes ~/.claude/skills/
+cp -R skills/media-refs skills/video-generation skills/photo-modes skills/marketing-studio ~/.claude/skills/
 ```
 
 More options in [INSTALL.md](./INSTALL.md). Agent-driven install (paste into your agent): [INSTALL_FOR_AGENTS.md](./INSTALL_FOR_AGENTS.md).
@@ -30,6 +30,7 @@ More options in [INSTALL.md](./INSTALL.md). Agent-driven install (paste into you
 | [`media-refs`](./skills/media-refs) | `/socialsight:media-refs` | Turn URLs, local files, and completed jobs into `media_id` values for `params.medias`. |
 | [`video-generation`](./skills/video-generation) | `/socialsight:video-generation` | Discover live model constraints, quote credits, submit `generate_video`, report the `job_id`, and stop. |
 | [`photo-modes`](./skills/photo-modes) | `/socialsight:photo-modes` | Write a full photographic prompt for `generate_image` — studio, lifestyle, close-up, moodboard, hero, editorial. |
+| [`marketing-studio`](./skills/marketing-studio) | `/socialsight:marketing-studio` | Pick the ad mode (UGC, tutorial, unboxing, review, showcase, TV spot, try-on, conceptual) and write per-beat camera motion before the prompts. |
 
 They chain: import with `media-refs`, then generate a still (`photo-modes`) or a clip (`video-generation`). The catalog is **not** duplicated here. Agents query `models_explore` at runtime so values cannot drift.
 

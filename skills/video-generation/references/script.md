@@ -12,7 +12,10 @@ pitch, dance, music, or spoken line, **that is the video**. Never write
 describe the job as "animate the attached stills".
 
 Refs are face / clothes / pack. Setting and plot come from the brief.
-`reference_1` = first person/object in the brief; later files map in order.
+Match each upload to the brief by its kind (image / video / audio) and the
+user's words ("this bag" + one photo → the photo), never by upload order.
+With an uploaded photo, the photo is the identity: name it ("the bag in
+reference_1"), never describe or redesign it.
 Every distinctive brief phrase must appear in Script and in
 `generations[].prompt`.
 

@@ -25,6 +25,11 @@
           "name": "photo-modes",
           "path": "skills/photo-modes",
           "invoke": "/socialsight:photo-modes"
+        },
+        {
+          "name": "marketing-studio",
+          "path": "skills/marketing-studio",
+          "invoke": "/socialsight:marketing-studio"
         }
       ]
     }
