@@ -58,11 +58,15 @@ Read `medias[]` on the catalog entry. `start_image` and `end_image` consume the 
 
 Each job is its own `generate_*` call. Credits are checked on that call —
 do not pre-quote with `get_cost`. A short wallet is HTTP 402 with no
-`job_id`: say they are out of credits and need to top up. Submit every
-planned call first (N variations = N calls); then report the `job_id` of
-each successful submit and end the turn. If one call 402s, keep the earlier
-jobs, say which one failed, and do not send the rest. Do not wait for
-results or call `job_status` — the client polls (`polling: "client_side"`).
+`job_id`.
+
+1. Submit the planned calls (N variations = N calls).
+2. Stop at the first 402: keep the jobs already started, send no more, say
+   which one failed, and ask them to top up.
+3. Report the `job_id` of each successful submit and end the turn.
+
+Do not wait for results or call `job_status` — the client polls
+(`polling: "client_side"`).
 
 ## Author vs edit
 

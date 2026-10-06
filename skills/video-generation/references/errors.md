@@ -28,4 +28,4 @@ The job was created and then failed. The payload includes `error_code` and `retr
 
 `retryable` on a **non-terminal** job (`pending` / `processing`) only means "poll later". The client does that — you do not call `job_status` after submit.
 
-After submit, `polling` is `"client_side"` and `agent_action` is `"report_job_id_and_stop"`: do not poll that job. Once every planned call is submitted, report the `job_id`s and end the turn, even when you expect the widget to show an error later.
+After submit, `polling` is `"client_side"` and `agent_action` is `"report_job_id_and_stop"`: do not poll that job. Once the planned calls are submitted (or the first 402 stopped them), report the `job_id`s and end the turn, even when you expect the widget to show an error later.
