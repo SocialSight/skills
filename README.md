@@ -28,7 +28,7 @@ More options in [INSTALL.md](./INSTALL.md). Agent-driven install (paste into you
 | Skill | Invoke | Description |
 |---|---|---|
 | [`media-refs`](./skills/media-refs) | `/socialsight:media-refs` | Turn URLs, local files, and completed jobs into `media_id` values for `params.medias`. |
-| [`video-generation`](./skills/video-generation) | `/socialsight:video-generation` | Discover live model constraints, quote credits, submit `generate_video`, report the `job_id`, and stop. |
+| [`video-generation`](./skills/video-generation) | `/socialsight:video-generation` | Discover live model constraints, submit every planned `generate_video` call (credits are checked there; HTTP 402 if short), report the `job_id`s, and stop. |
 | [`photo-modes`](./skills/photo-modes) | `/socialsight:photo-modes` | Write a full photographic prompt for `generate_image` — studio, lifestyle, close-up, moodboard, hero, editorial. |
 | [`marketing-studio`](./skills/marketing-studio) | `/socialsight:marketing-studio` | Pick the ad mode (UGC, tutorial, unboxing, review, showcase, TV spot, try-on, conceptual) and write per-beat camera motion before the prompts. |
 
@@ -52,6 +52,6 @@ They chain: import with `media-refs`, then generate a still (`photo-modes`) or a
 | Import a URL or local file | `media-refs` | `params.medias[].value` is a `media_id` or completed `job_id`, never a URL |
 | Chain a following clip from the last frame | `media-refs` | Use MediaItem `last_frame_media_id` as `start_image` |
 | Make a video | `video-generation` | Query `models_explore` first; never send schema defaults |
-| Quote credits before spending | `video-generation` / `photo-modes` | `get_cost: true` returns `{ credits, model_id, job_type }` |
+| Credits | `video-generation` / `photo-modes` | Checked on each `generate_*` call — no pre-quote with `get_cost`. HTTP 402 has no `job_id`: say they are out of credits and need to top up; keep jobs already started |
 | Studio / lifestyle / editorial still | `photo-modes` | Prompts are written in full — no backend enhancer |
-| After submit | either generation skill | Report `job_id` and stop. Do not call `job_status` |
+| After submit | either generation skill | Submit every planned call, then report each `job_id` and stop. Do not call `job_status` — the client polls |
