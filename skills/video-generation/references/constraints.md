@@ -37,4 +37,4 @@ Not a min/max range. `[4, 6, 8]` does **not** mean 4–8. `5` is invalid on that
 
 If `durations` / `supported_durations` is `[]` (e.g. KLING_2_6_MOTION), the model takes no `duration` at all — omit the field. Do not send the schema default of `5`.
 
-If the user wants a length that is not in the list, round to an allowed value and rewrite the shot so it still works at that length. Never send a number that is not in the list.
+If the user wants a length that is not in the list, round to the closest listed value and rewrite the timed beats so they sum to that length. Never send a number that is not in the list, and do not split one request into several clips to reach it — or pick a model that lists the length.

@@ -3,7 +3,7 @@
 ## Insufficient credits
 
 A submit that the account cannot afford fails with HTTP 402 (no `job_id`, no
-debit). Keep any jobs already started in the same approve; report which
+debit). Keep any jobs already started in the same batch; report which
 generation failed and ask the user to top up — do not cancel earlier jobs or
 retry the same paid call.
 

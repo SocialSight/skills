@@ -29,7 +29,7 @@ models_explore(action="get", model_id="SEEDANCE_2_5")   # our default video
 # or: recommend / list, then pick SEEDANCE_2_5 from items
 ```
 
-This agent's default video model is **`SEEDANCE_2_5`**, even when other
+SocialSight's default video model is **`SEEDANCE_2_5`**, even when other
 allowlist rows (Wan, Veo, Kling, …) appear first. Use another model only if
 the user names one, Seedance is missing, or its caps cannot meet the brief.
 
@@ -72,7 +72,7 @@ Lists are enums, not ranges. If `8` is not in `durations`, do not send `8`.
 
 Copy catalog strings **verbatim** into `params`. Do not lowercase resolutions. Do not use the tool schema default of `duration: 5` or `resolution: "720p"`.
 
-If the user asked for a duration that is not listed, pick the closest allowed value and adjust the shot (pace, hold, coverage) so the request still makes sense.
+A duration that is not listed: see [constraints.md](constraints.md).
 
 ## Audio
 

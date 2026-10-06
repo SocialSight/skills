@@ -26,9 +26,9 @@ Typical placements (map to an exact catalog string; do not invent):
 - Stills → quality `2K` unless they asked sharper (`4K` if listed)
 - Short ad → a listed duration near `8` seconds
 
-N variations = N separate calls. Each call uses that row's planner prompt
-(talent / wardrobe / setting change as asked). `count` stays 1 — the API
-rejects `count > 1`.
+N variations = N separate calls, each with its own prompt (talent /
+wardrobe / setting change as asked). `count` stays 1 — the API rejects
+`count > 1`.
 
 ## Call shape
 
@@ -36,7 +36,7 @@ rejects `count > 1`.
 { "params": { "model": "SEEDANCE_2_5", "prompt": "..." } }
 ```
 
-Primitive-arg tools are top-level: `models_explore`, `get_generation_models`, `job_status`, `job_display`, `balance`, `transactions`. This agent does not receive `job_status` / `job_display`.
+Primitive-arg tools are top-level: `models_explore`, `get_generation_models`, `job_status`, `job_display`, `balance`, `transactions`.
 
 Media goes in `params.medias` as `[{ "value": "<media_id or completed job_id>", "role": "..." }]`. Never a URL. Import first (skill `media-refs`). On `generate_image`, `role` is ignored; only `value` matters.
 
@@ -48,7 +48,7 @@ Load [references/model-discovery.md](references/model-discovery.md) for the disc
 
 ## Duration
 
-`supported_durations` / `durations` is a discrete list, not a min/max range. Some models publish an empty list and take no `duration` at all (KLING_2_6_MOTION). When a requested duration is not in the list, do not send that number. 15s on a model that lists 4/6/8 is two catalog clips (8+8 or 8+6) with join frames — never `duration: 15`. Round only to a listed value.
+`durations` is a discrete list, not a range; an empty list means omit `duration`. A length that is not listed is rounded to a listed value — the rule is in [references/constraints.md](references/constraints.md).
 
 ## Budget
 
@@ -56,12 +56,12 @@ Read `medias[]` on the catalog entry. `start_image` and `end_image` consume the 
 
 ## Submit, then stop
 
-After approve, submit starts each `generations[]` row (and `stills[]`) as its own
-`generate_*`. Credits are checked on that call (HTTP 402 if the wallet is
-short) — do not pre-quote with `get_cost`. Producer does the same on edit /
-stills. After each successful submit, report the `job_id` and stop that job.
-If a later row 402s, keep earlier jobs and report which generation failed.
-The client polls (`polling: "client_side"`). Do **not** call `job_status`.
+Each job is its own `generate_*` call. Credits are checked on that call —
+do not pre-quote with `get_cost`. A short wallet is HTTP 402 with no
+`job_id`: say they are out of credits and need to top up. Report a `job_id`
+only after a successful submit, then stop. If one call in a batch 402s, keep
+the earlier jobs and say which one failed. The client polls
+(`polling: "client_side"`). Do **not** call `job_status`.
 
 ## Author vs edit
 
@@ -69,9 +69,8 @@ With a source video (`role: "video"`), edit mode preserves the source structure,
 
 ## Script generation
 
-Load [references/script.md](references/script.md). The planner writes the
-script from the user message; refs are likeness, not the plot. Always write
-spoken lines and music when the brief has them. "No VO" is not the default.
-Each campaign variation gets its own `generations[].prompt`.
+Load [references/script.md](references/script.md). Write the script from
+the user message; refs are likeness, not the plot. Each campaign variation
+gets its own prompt.
 
 Errors: [references/errors.md](references/errors.md).
