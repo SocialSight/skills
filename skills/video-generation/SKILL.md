@@ -54,14 +54,15 @@ Load [references/model-discovery.md](references/model-discovery.md) for the disc
 
 Read `medias[]` on the catalog entry. `start_image` and `end_image` consume the `reference_image` budget (`counts_toward`). On SEEDANCE_2_5 that is `#ref_image + #start_frame + #end_frame ≤ 30`. On VEO3_1, `max_inputs: 3` — anchor + start + end saturates it. Do **not** use `max_reference_inputs` for the image cap — on 2.5 that is 50 and counts all inputs. Details in [references/constraints.md](references/constraints.md).
 
-## Submit, then stop
+## Submit every call, then stop
 
 Each job is its own `generate_*` call. Credits are checked on that call —
 do not pre-quote with `get_cost`. A short wallet is HTTP 402 with no
-`job_id`: say they are out of credits and need to top up. Report a `job_id`
-only after a successful submit, then stop. If one call in a batch 402s, keep
-the earlier jobs and say which one failed. The client polls
-(`polling: "client_side"`). Do **not** call `job_status`.
+`job_id`: say they are out of credits and need to top up. Submit every
+planned call first (N variations = N calls); then report the `job_id` of
+each successful submit and end the turn. If one call 402s, keep the earlier
+jobs, say which one failed, and do not send the rest. Do not wait for
+results or call `job_status` — the client polls (`polling: "client_side"`).
 
 ## Author vs edit
 

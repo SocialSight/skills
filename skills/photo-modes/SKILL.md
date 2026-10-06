@@ -19,7 +19,7 @@ SocialSight does not enhance prompts on the backend. Write the photographic prom
 
 `generate_image` nests arguments under `params`. Discover `qualities`, `aspect_ratios`, and reference limits with `models_explore(action="get", model_id=...)` — never use schema defaults. Media refs go in `params.medias` as `[{ "value": "<media_id or completed job_id>" }]`. `role` is ignored; only `value` matters.
 
-Submit the real job. A short wallet is HTTP 402 with no `job_id`: say they are out of credits and need to top up. Report a `job_id` only after a successful submit, then stop. Omit `count` or set it to 1.
+Submit the real job. A short wallet is HTTP 402 with no `job_id`: say they are out of credits and need to top up. Omit `count` or set it to 1; N stills are N calls. Submit every planned call, then report each successful `job_id` and end the turn — do not wait for results.
 
 ## Pick a treatment
 
