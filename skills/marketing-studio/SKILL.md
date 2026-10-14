@@ -3,7 +3,8 @@ name: marketing-studio
 description: >
   Use when planning a branded ad video or its storyboard through SocialSight
   MCP: UGC, tutorial, unboxing, product review, product showcase, TV spot,
-  virtual try-on, or conceptual product ad. Use when the brief needs a style
+  virtual try-on, or conceptual product ad, an animated / editorial
+  explainer, or an app demo with screenshots. Use when the brief needs a style
   (cast, shots, camera motion, sound) before writing generate_image /
   generate_video prompts.
 ---
@@ -24,6 +25,11 @@ still wins on product, lines, and setting.
 - A presenter giving an opinion → `review`.
 - Someone wearing or using it → `try_on`.
 - Surreal, levitating, splash, CGI → `conceptual`.
+- Explains an idea or how something works; animated, illustrated,
+  editorial, motion comic, documentary → `explainer` (a narrator carries
+  it).
+- An app, website, or marketplace shown through its screens while someone
+  talks to camera → `app_demo` (screenshots are overlays, not characters).
 - "Surprise me" → the mode that best fits the product; say which.
 - No clue at all → `ugc`.
 
@@ -37,6 +43,9 @@ the user asks for another.
   [references/character-sheet.md](references/character-sheet.md).
 - Video beats follow `references/motion.md`: camera · action · motion ·
   sound, one camera move per beat.
+- Sound and text follow the brief's sound and text, not the mode's column,
+  when they differ. The lines and the on-screen text live on the shot list
+  (line, text); the prompt copies them (dialog.md, "On-screen text").
 - Tell the user the mode in plain words ("an unboxing video", "a polished
   TV-style ad"), never the slug.
 

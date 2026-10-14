@@ -16,6 +16,15 @@ Prompts are in English. Caps (model, `durations`, audio) come from
   faster cuts with decimal timecodes (a 3s beat = 0.6s + 0.4s + 2.0s).
 - A character or product look is at most ~350 characters of concrete visual
   traits. The video and image prompts have no length cap.
+- Sound: the brief's sound. narration — an off-screen voice. dialogue — the
+  on-screen cast speaks. music_only — nobody speaks; AUDIO ends with "No
+  dialogue". With no brief, the mode's Sound column (modes.md); no mode →
+  music only. A line the user quoted goes in verbatim whatever the setting:
+  spoken with narration or dialogue; with music_only, on screen as a TEXT:
+  line instead (with text none, one end-card TEXT: in the final beat).
+- Text: the brief's text — subtitles, keywords, labels, or none (see
+  "On-screen text"). With a shot list, each shot's line and text are the
+  script: copy them word for word, never rewrite them here.
 
 ## Brief vs uploads
 
@@ -25,7 +34,10 @@ pitch, dance, music, or spoken line, **that is the video**. Never write
 describe the job as "animate the attached stills".
 
 Image uploads are identity only (face, clothes, pack); setting and plot
-come from the brief. A source video (`role: "video"`) is different: edit
+come from the brief. One exception: a screenshot (an app, a website, a
+chart, a document) is an overlay, not a character — the beat says where it
+sits over the frame ("the listing from <<<reference_2>>> slides in over her
+left shoulder") and what the presenter does with it. A source video (`role: "video"`) is different: edit
 mode keeps its structure, motion, timing, and audio, so the prompt states
 only the change ("make her jacket red"), never new beats or a new length.
 Match each upload by its kind (image / video / audio) and the user's words
@@ -64,13 +76,19 @@ One line per beat: time range · framing + camera move · action · who.
    `BEAT n (mm:ss–mm:ss) — <title>`, then its cuts: framing + camera move +
    action + who. Add `Speed: REAL TIME` or `SLOW MOTION (~N%)` when the
    speed changes. Cut times are contiguous inside the beat. Hold the payoff.
-5. **AUDIO** — only when the model has audio. A global bed, then synced
-   sounds per beat with timestamps at the peaks. Write "no dialogue" when
-   there is none.
+   With narration, each beat ends with its VO: line; with dialogue, the
+   speaking cut names who talks and quotes the line. With any text but
+   none, the beat ends with TEXT: — what appears on screen there.
+5. **AUDIO** — only when the model has audio. With a voice, first voice —
+   who it is (gender, age, tone, pitch, pace) and the two or three words to
+   lean on. Then the bed — kept under the voice — and synced sounds per
+   beat with timestamps at the peaks. Write "No dialogue" when nobody
+   speaks.
 6. **CONTINUITY RULES** — objects move only for an on-screen cause; no
    teleporting, duplicated props, or geography changes; signature features
-   stay attached and single; no extra characters, text, subtitles, logos,
-   or HUD unless asked.
+   stay attached and single; no extra characters, logos, or HUD unless
+   asked; no text beyond the TEXT: lines. With any text but none, one TEXT
+   STYLE: line fixes the look (see "On-screen text").
 
 ### Skeleton
 
@@ -99,6 +117,19 @@ AUDIO: bed — <MUSIC/AMBIENCE>. 00:03.4 <impact SFX>; 00:06.2 <payoff sting>. N
 CONTINUITY RULES: <the six rules above>.
 ```
 
+With a voice and text, each beat carries its shot's line and text, and the
+AUDIO opens with the voice:
+
+```
+BEAT 1 (00:00–00:03) — <setup>
+  0.0–3.0s: wide, slow push-in. <HERO> <goal action>. Speed: REAL TIME
+  VO: "<the shot's line>"
+  TEXT: <the shot's text>
+…
+AUDIO: voice — <gender, age, tone, pitch, pace>; lean on "<word>", "<word>". bed — <restrained MUSIC>, under the voice. 00:05.6 <impact SFX> on the turn.
+TEXT STYLE: <one of the three looks below>.
+```
+
 ### Good vs bad
 
 - Bad: "A fun, energetic scene where the hero has a chaotic morning."
@@ -123,6 +154,41 @@ CONTINUITY RULES: <the six rules above>.
 
 - Spoken copy: if they asked for a line or brand, write it **verbatim**.
   Pace ≈ 2.2 words/sec against the cut it plays over.
+- Narration you write (sound: narration, when the shot list has no line):
+  one line per beat, ≈2.2 words per second of that beat (a 3s beat ≈ 6
+  words), present tense, plain words, no brand claims they did not make.
+  The lines read as one thought in order; the last one lands the idea
+  ("It's already over."). The duration stays fixed: write only the words
+  the idea needs within it. When the lines run short, the remaining beats
+  play under the bed with no VO — never stretch, repeat, or pad lines to
+  fill the length, and never change the duration to fit them.
+- Dialogue (sound: dialogue): the speaker is on screen in that cut, named
+  with their identity block; quote the line; one speaker per cut. A
+  presenter talks to camera: eye contact, natural gestures, pauses.
 - Music / SFX: if they named a genre or feel, put it in AUDIO (or the beats
-  on SHORT). Set `enable_audio` only when the model supports audio.
+  on SHORT). Set `enable_audio` only when the model supports audio. With a
+  voice, the bed stays under it; add a click / whoosh when an overlay or a
+  TEXT: lands.
 - Never leave the prompt empty or mood-only.
+
+## On-screen text
+
+brief.text picks one look; TEXT STYLE: states it once and every beat's
+TEXT: follows it. Text appears only where a TEXT: says so.
+
+- **subtitles** — the spoken line, whole, under the picture. Bold white
+  sans-serif, centered near the bottom on a semi-transparent dark bar; each
+  subtitle on screen exactly while its line is spoken.
+- **keywords** — one or two bold words that pop as the voice says them.
+  Large uppercase white sans-serif, high contrast, upper third or centered;
+  each word appears on its syllable and leaves on the next cut.
+- **labels** — editorial captions beside the thing they name, with arrows,
+  brackets, or circles. Bold condensed sans-serif inside small cream
+  rectangles, charcoal or white lettering, one accent color for arrows and
+  numbers; each label slides in with its fact and stays for the beat.
+- **none** — nothing. The continuity rule "no text" holds, except the
+  music_only end card for a quoted line (see "Fixed inputs").
+
+Timing: a TEXT: lands with the words it echoes (subtitles / keywords) or
+with the fact it names (labels), never before. Text is never the only
+carrier of a fact the picture should show.
