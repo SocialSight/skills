@@ -7,8 +7,11 @@ Prompts are in English. Caps (model, `durations`, audio) come from
 
 ## Fixed inputs
 
-- Duration is fixed by the confirmed brief. Never change it.
-- The shot list has 2–10 beats in whole seconds that sum to the duration.
+- Duration: the confirmed brief's (already a listed value for the model).
+  With no brief, the length resolved from the model's `durations`
+  (rounded per `constraints.md`). Beats always sum to that resolved length,
+  never to an unlisted number the user said.
+- With a shot list: 2–10 beats in whole seconds that sum to the duration.
   The prompt follows those beats in order. Inside a beat you may split into
   faster cuts with decimal timecodes (a 3s beat = 0.6s + 0.4s + 2.0s).
 - A character or product look is at most ~350 characters of concrete visual
@@ -21,11 +24,14 @@ pitch, dance, music, or spoken line, **that is the video**. Never write
 "not a product ad", never replace the ask with the still's scene, and never
 describe the job as "animate the attached stills".
 
-Uploads are identity only (face, clothes, pack); setting and plot come from
-the brief. Match each upload by its kind (image / video / audio) and the
-user's words ("this bag" + one photo → the photo), never by upload order.
-Name an uploaded photo ("the bag in reference_1"); never describe or
-redesign it. Every distinctive brief phrase must appear in the prompt.
+Image uploads are identity only (face, clothes, pack); setting and plot
+come from the brief. A source video (`role: "video"`) is different: edit
+mode keeps its structure, motion, timing, and audio, so the prompt states
+only the change ("make her jacket red"), never new beats or a new length.
+Match each upload by its kind (image / video / audio) and the user's words
+("this bag" + one photo → the photo), never by upload order. Name an
+uploaded photo ("the bag in reference_1"); never describe or redesign it.
+Every distinctive brief phrase must appear in the prompt.
 
 ## Pick a tier
 

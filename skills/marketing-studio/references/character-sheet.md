@@ -32,8 +32,9 @@ Render: <material detail>, soft even key light, contact shadows under
 every figure, consistent lighting across all views.
 
 Negative: no clothing or props unless part of the identity; no
-environment; no extra characters; no text beyond the title and labels;
-must not resemble any existing character, mascot, or celebrity.
+environment; no extra characters; no text beyond the title, info block,
+and labels; must not resemble any existing character, mascot, or
+celebrity.
 ```
 
 ## Product template
@@ -57,8 +58,8 @@ Render: <material detail>, soft even key light, contact shadows,
 consistent lighting across all views.
 
 Negative: no props beyond the hand; no environment; no extra products;
-no text beyond the title, labels, and the product's own printed label;
-must not resemble any existing brand or product.
+no text beyond the title, info block, labels, and the product's own
+printed label; must not resemble any existing brand or product.
 ```
 
 ## Rules
@@ -66,6 +67,8 @@ must not resemble any existing brand or product.
 - The identity block is the same ≤350-char look used in the video prompt;
   the sheet only expands it with anatomy, materials, and counts.
 - With an uploaded photo, the photo is the identity: write "the <role>
-  from reference_N" and never redesign it.
+  from reference_N" and never redesign it. It wins over the negatives:
+  drop "must not resemble any existing …" for that subject (it is the
+  user's own person, character, or product), in both templates.
 - Counts are numbers, not "some" or "a few".
 - Action poses come from the brief's beats, not generic hero poses.
