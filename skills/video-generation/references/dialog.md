@@ -19,7 +19,9 @@ Prompts are in English. Caps (model, `durations`, audio) come from
 - Sound: the brief's sound. narration — an off-screen voice. dialogue — the
   on-screen cast speaks. music_only — nobody speaks; AUDIO ends with "No
   dialogue". With no brief, the mode's Sound column (modes.md); no mode →
-  music only. A line the user quoted goes in verbatim whatever the setting.
+  music only. A line the user quoted goes in verbatim whatever the setting:
+  spoken with narration or dialogue; with music_only, on screen as a TEXT:
+  line instead (with text none, one end-card TEXT: in the final beat).
 - Text: the brief's text — subtitles, keywords, labels, or none (see
   "On-screen text"). With a shot list, each shot's line and text are the
   script: copy them word for word, never rewrite them here.
@@ -156,9 +158,10 @@ TEXT STYLE: <one of the three looks below>.
   one line per beat, ≈2.2 words per second of that beat (a 3s beat ≈ 6
   words), present tense, plain words, no brand claims they did not make.
   The lines read as one thought in order; the last one lands the idea
-  ("It's already over."). The voice sets the length: a 10s idea needs 10s,
-  a 30s documentary needs its 30 — never pad beats to fill a length the
-  lines do not need.
+  ("It's already over."). The duration stays fixed: write only the words
+  the idea needs within it. When the lines run short, the remaining beats
+  play under the bed with no VO — never stretch, repeat, or pad lines to
+  fill the length, and never change the duration to fit them.
 - Dialogue (sound: dialogue): the speaker is on screen in that cut, named
   with their identity block; quote the line; one speaker per cut. A
   presenter talks to camera: eye contact, natural gestures, pauses.
@@ -183,7 +186,8 @@ TEXT: follows it. Text appears only where a TEXT: says so.
   brackets, or circles. Bold condensed sans-serif inside small cream
   rectangles, charcoal or white lettering, one accent color for arrows and
   numbers; each label slides in with its fact and stays for the beat.
-- **none** — nothing. The continuity rule "no text" holds.
+- **none** — nothing. The continuity rule "no text" holds, except the
+  music_only end card for a quoted line (see "Fixed inputs").
 
 Timing: a TEXT: lands with the words it echoes (subtitles / keywords) or
 with the fact it names (labels), never before. Text is never the only
