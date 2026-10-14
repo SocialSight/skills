@@ -74,7 +74,7 @@ With a source video (`role: "video"`), edit mode preserves the source structure,
 
 ## Script generation
 
-Load [references/script.md](references/script.md). Write the script from
+Load [references/dialog.md](references/dialog.md). Write the script from
 the user message; refs are likeness, not the plot. Each campaign variation
 gets its own prompt.
 
