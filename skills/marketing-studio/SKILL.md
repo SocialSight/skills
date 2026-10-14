@@ -32,7 +32,9 @@ the user asks for another.
 
 ## Writing it
 
-- Storyboard stills are frames: framing, light, and pose only.
+- Storyboard stills are frames: framing, light, and pose only. For a
+  character or product model sheet, use
+  [references/character-sheet.md](references/character-sheet.md).
 - Video beats follow `references/motion.md`: camera · action · motion ·
   sound, one camera move per beat.
 - Tell the user the mode in plain words ("an unboxing video", "a polished
