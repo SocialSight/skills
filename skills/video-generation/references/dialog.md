@@ -87,8 +87,10 @@ One line per beat: time range · framing + camera move · action · who.
 6. **CONTINUITY RULES** — objects move only for an on-screen cause; no
    teleporting, duplicated props, or geography changes; signature features
    stay attached and single; no extra characters, logos, or HUD unless
-   asked; no text beyond the TEXT: lines. With any text but none, one TEXT
-   STYLE: line fixes the look (see "On-screen text").
+   asked; no text beyond the TEXT: lines; no end card, title card, or
+   slogan except as "End on a hold" (Writing guidance) allows. With any
+   text but none, one TEXT STYLE: line fixes the look
+   (see "On-screen text").
 
 ### Skeleton
 
@@ -145,7 +147,17 @@ TEXT STYLE: <one of the three looks below>.
 - Every gag or product moment is physical cause → effect, both on screen.
 - One clear goal per character.
 - Escalate beat to beat; the last beat is the biggest.
-- End on a hold, not a cut-away.
+- End on a hold, not a cut-away: the last image of the story stays on
+  screen. An end card (title, slogan, logo lockup, "bright end-frame") is
+  ad grammar. First match wins: (1) the user asked for a card or logo
+  frame → add it, in any mode; (2) music_only with a quoted line and text
+  none → the end-card TEXT: from "Fixed inputs"; (3) `tv_spot` /
+  `app_demo` → their end card or CTA; with text none, a textless end
+  frame instead (product or logo as an image, no words, no written CTA);
+  (4) anything else — explainer, story, documentary — no card, and
+  "payoff" means the idea landing. A card never replaces the held image:
+  the image holds first, then the card closes the final beat, inside the
+  fixed duration.
 - Two asks ("X, then at the end Y") → two acts inside the same beats.
 - "Three variations" → three calls, three distinct prompts, same timing;
   change only talent / wardrobe / setting as asked.
@@ -176,18 +188,26 @@ TEXT STYLE: <one of the three looks below>.
 brief.text picks one look; TEXT STYLE: states it once and every beat's
 TEXT: follows it. Text appears only where a TEXT: says so.
 
+Video models render type badly: dense lettering, boxes, arrows, and
+numbers come out garbled. Keep text light — plain bold sans-serif, high
+contrast, one color, no frames or arrows unless the user asked — and
+never put a different supplemental text (keywords, labels) on every beat
+when the voice already says it. Subtitles are exempt: they follow every
+spoken line.
+
 - **subtitles** — the spoken line, whole, under the picture. Bold white
   sans-serif, centered near the bottom on a semi-transparent dark bar; each
-  subtitle on screen exactly while its line is spoken.
+  subtitle on screen exactly while its line is spoken. The default with
+  narration.
 - **keywords** — one or two bold words that pop as the voice says them.
   Large uppercase white sans-serif, high contrast, upper third or centered;
   each word appears on its syllable and leaves on the next cut.
-- **labels** — editorial captions beside the thing they name, with arrows,
-  brackets, or circles. Bold condensed sans-serif inside small cream
-  rectangles, charcoal or white lettering, one accent color for arrows and
-  numbers; each label slides in with its fact and stays for the beat.
+- **labels** — a short caption (≤3 words) beside the thing it names, on at
+  most three beats, not every one. Bold condensed sans-serif, one accent
+  color; each label appears with its fact and stays for the beat.
 - **none** — nothing. The continuity rule "no text" holds, except the
-  music_only end card for a quoted line (see "Fixed inputs").
+  music_only end card for a quoted line (see "Fixed inputs"). A `tv_spot`
+  / `app_demo` with none closes on a textless end frame ("End on a hold").
 
 Timing: a TEXT: lands with the words it echoes (subtitles / keywords) or
 with the fact it names (labels), never before. Text is never the only

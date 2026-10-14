@@ -10,10 +10,13 @@
 | `tv_spot` | commercial, TV ad, cinematic, premium | actors in a scene | hook → problem → product → payoff → end card; dolly, crane, graded light | music + optional VO |
 | `try_on` | wear, try on, outfit, lookbook | model wearing or using it | mirror, turn, full length + detail; organic or polished per their words | music or light talk |
 | `conceptual` | surreal, levitating, splash, CGI, creative | none | floating product, splash, sculptural set, slow motion | music, sound design |
-| `explainer` | explain, show how it works, editorial, motion comic, animated story, illustrated, documentary | an illustrated or animated lead, often one figure; the idea is the hero | 2D / illustrated frames, slow push-ins, parallax between layers, one dramatic transition, extreme close-up payoff | narrator + subtitles or labels, restrained music under the voice |
+| `explainer` | explain, show how it works, editorial, motion comic, animated story, illustrated, documentary | an illustrated or animated lead, often one figure; the idea is the hero | 2D / illustrated frames, slow push-ins, parallax between layers, one dramatic transition, extreme close-up payoff held as the last image — no end card unless asked | narrator + subtitles, restrained music under the voice |
 | `app_demo` | app, website, marketplace, SaaS, "found it on", screenshots, product discovery | one presenter to camera; the app's screens as overlays | hook → discovery → UI demo → social proof → payoff → CTA; direct-to-camera, jump cuts, digital punch-ins, screenshots sliding over the presenter | presenter speaks fast, bold keywords in sync, UI clicks and whooshes |
 
 The Sound column is the mode's default. A brief's sound (narration /
 dialogue / music_only) and text (subtitles / keywords / labels / none)
 override it: a `tv_spot` with a narrator, a `ugc` where nobody talks, an
-`explainer` with music only.
+`explainer` with music only. Only `tv_spot` and `app_demo` end on a card or
+CTA by default; the rest hold the last image. A card or logo frame the user
+asked for comes after that held image, never instead of it (dialog.md,
+"End on a hold").
