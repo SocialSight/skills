@@ -46,6 +46,10 @@ the user asks for another.
 - Sound and text follow the brief's sound and text, not the mode's column,
   when they differ. The lines and the on-screen text live on the shot list
   (line, text); the prompt copies them (dialog.md, "On-screen text").
+- Only `tv_spot` and `app_demo` close on an end card or CTA by default.
+  Every other mode — `explainer` above all — ends on the last image of the
+  story, held. A title card, slogan, or logo frame the user asked for comes
+  after that hold, never instead of it (dialog.md, "End on a hold").
 - Tell the user the mode in plain words ("an unboxing video", "a polished
   TV-style ad"), never the slug.
 
