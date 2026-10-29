@@ -3,7 +3,7 @@
 Three skills ship in this repo. They are one body of instructions for any client that talks to the SocialSight MCP server — Claude, a Google ADK agent, Cursor, Codex. There is no CLI variant.
 
 - **`media-refs`** — turn URLs, local files, and completed jobs into `media_id` values for `params.medias`
-- **`video-generation`** — discover live model constraints, quote credits, submit `generate_video`, and stop
+- **`video-generation`** — discover live model constraints, submit `generate_video`, and report the `job_id`s (credits and HTTP 402: see the skill)
 - **`photo-modes`** — write full photographic prompts for `generate_image` (no backend prompt enhancer)
 
 They chain: import media with `media-refs`, then generate video or a still. Photo prompts always go through `generate_image` with catalog values.
