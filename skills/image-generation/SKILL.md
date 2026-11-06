@@ -45,11 +45,14 @@ image is made:
 
 - **Cast sheet** — every person, character, animal, or product of the
   video in **one** image, side by side. Template:
-  [references/cast-sheet.md](references/cast-sheet.md). Aspect `16:9`.
+  [references/cast-sheet.md](references/cast-sheet.md). Aspect `16:9` if
+  the image model lists it, else the closest wide one it lists.
 - **Key frame** — nothing recurring: the first shot of the video as a still,
   in the **video model's** listed `aspect_ratio`, framed and lit as it
   opens. No motion words. Do not invent an aspect — wait for the video
-  skill's `models_explore get`.
+  skill's `models_explore get`. If the image model does not list that
+  aspect, use the closest one it lists, or another image model that lists
+  it.
 
 ## Start the job
 

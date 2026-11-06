@@ -55,7 +55,8 @@ First match wins for the image:
   `models_explore(action="get", model_id=...)` and copy `duration`,
   `resolution`, `aspect_ratio`, and `medias[].roles` verbatim. Never schema
   defaults (`duration: 5`, `resolution: "720p"`). The key frame uses that
-  `aspect_ratio`; a cast sheet uses `16:9`. Details:
+  `aspect_ratio`; a cast sheet uses `16:9` (or the closest wide aspect the
+  image model lists). Details:
   [references/model-discovery.md](references/model-discovery.md),
   [references/constraints.md](references/constraints.md).
 
