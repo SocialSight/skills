@@ -4,7 +4,7 @@ description: >
   Use when planning a branded ad video or its storyboard through SocialSight
   MCP: UGC, tutorial, unboxing, product review, product showcase, TV spot,
   virtual try-on, or conceptual product ad, an animated / editorial
-  explainer, or an app demo with screenshots. Use when the brief needs a style
+  explainer, or an app demo with screenshots. Use when the ask needs a style
   (cast, shots, camera motion, sound) before writing generate_image /
   generate_video prompts.
 ---
@@ -13,8 +13,8 @@ description: >
 
 You plan ads, not just UGC. Before writing a script or any prompt, pick
 **one mode** from `references/modes.md` from the user's words. The mode sets
-the cast, the shot list, the camera and motion, and the sound. The brief
-still wins on product, lines, and setting.
+the cast, the shots, the camera and motion, and the sound. The user's
+words still win on product, lines, and setting.
 
 ## Picking flow
 
@@ -38,18 +38,19 @@ the user asks for another.
 
 ## Writing it
 
-- Storyboard stills are frames: framing, light, and pose only. For a
-  character or product model sheet, use
-  [references/character-sheet.md](references/character-sheet.md).
-- Video beats follow `references/motion.md`: camera · action · motion ·
-  sound, one camera move per beat.
-- Sound and text follow the brief's sound and text, not the mode's column,
-  when they differ. The lines and the on-screen text live on the shot list
-  (line, text); the prompt copies them (dialog.md, "On-screen text").
+- Storyboard stills are frames: framing, light, and pose only. For the
+  cast sheet a video starts from, use skill `image-generation`,
+  [references/cast-sheet.md](../image-generation/references/cast-sheet.md).
+- Video beats follow skill `video-generation`,
+  [references/motion.md](../video-generation/references/motion.md): camera ·
+  action · motion · sound, one camera move per beat.
+- Sound and text follow the user's words, not the mode's column, when they
+  differ. The lines and the on-screen text live in the prompt
+  (`video-generation` / `dialog.md`, "On-screen text").
 - Only `tv_spot` and `app_demo` close on an end card or CTA by default.
   Every other mode — `explainer` above all — ends on the last image of the
   story, held. A title card, slogan, or logo frame the user asked for comes
-  after that hold, never instead of it (dialog.md, "End on a hold").
+  after that hold, never instead of it (`dialog.md`, "End on a hold").
 - Tell the user the mode in plain words ("an unboxing video", "a polished
   TV-style ad"), never the slug.
 
