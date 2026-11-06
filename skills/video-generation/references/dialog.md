@@ -7,43 +7,44 @@ Prompts are in English. Caps (model, `durations`, audio) come from
 
 ## Fixed inputs
 
-- Duration: the confirmed brief's (already a listed value for the model).
-  With no brief, the length resolved from the model's `durations`
-  (rounded per `constraints.md`). Beats always sum to that resolved length,
+- Duration: a listed value for the model. Beats always sum to that length,
   never to an unlisted number the user said.
-- With a shot list: 2–10 beats in whole seconds that sum to the duration.
-  The prompt follows those beats in order. Inside a beat you may split into
-  faster cuts with decimal timecodes (a 3s beat = 0.6s + 0.4s + 2.0s).
+- 2–10 beats in whole seconds that sum to the duration. The prompt follows
+  those beats in order. Inside a beat you may split into faster cuts with
+  decimal timecodes (a 3s beat = 0.6s + 0.4s + 2.0s).
 - A character or product look is at most ~350 characters of concrete visual
   traits. The video and image prompts have no length cap.
-- Sound: the brief's sound. narration — an off-screen voice. dialogue — the
-  on-screen cast speaks. music_only — nobody speaks; AUDIO ends with "No
-  dialogue". With no brief, the mode's Sound column (modes.md); no mode →
-  music only. A line the user quoted goes in verbatim whatever the setting:
+- Sound: from the user's words, or the mode's Sound column
+  (`marketing-studio` / `modes.md`) when they did not say. narration — an
+  off-screen voice. dialogue — the on-screen cast speaks. music_only —
+  nobody speaks; AUDIO ends with "No dialogue". No mode and no ask → music
+  only. A line the user quoted goes in verbatim whatever the setting:
   spoken with narration or dialogue; with music_only, on screen as a TEXT:
   line instead (with text none, one end-card TEXT: in the final beat).
-- Text: the brief's text — subtitles, keywords, labels, or none (see
-  "On-screen text"). With a shot list, each shot's line and text are the
-  script: copy them word for word, never rewrite them here.
+- Text: from the user's words — subtitles, keywords, labels, or none (see
+  "On-screen text"). Copy every line they quoted word for word; never
+  rewrite it here.
 
-## Brief vs uploads
+## Story vs uploads
 
 The latest user message is the story. If they named a product, brand,
 pitch, dance, music, or spoken line, **that is the video**. Never write
 "not a product ad", never replace the ask with the still's scene, and never
 describe the job as "animate the attached stills".
 
-Image uploads are identity only (face, clothes, pack); setting and plot
-come from the brief. One exception: a screenshot (an app, a website, a
-chart, a document) is an overlay, not a character — the beat says where it
-sits over the frame ("the listing from <<<reference_2>>> slides in over her
-left shoulder") and what the presenter does with it. A source video (`role: "video"`) is different: edit
-mode keeps its structure, motion, timing, and audio, so the prompt states
-only the change ("make her jacket red"), never new beats or a new length.
+Image uploads and the cast sheet / key frame are identity only (face,
+clothes, pack); setting and plot come from the message. One exception: a
+screenshot (an app, a website, a chart, a document) is an overlay, not a
+character — the beat says where it sits over the frame ("the listing from
+<<<reference_2>>> slides in over her left shoulder") and what the presenter
+does with it. A source video (`role: "video"`) is different: edit mode
+keeps its structure, motion, timing, and audio, so the prompt states only
+the change ("make her jacket red"), never new beats or a new length.
 Match each upload by its kind (image / video / audio) and the user's words
 ("this bag" + one photo → the photo), never by upload order. Name an
-uploaded photo ("the bag in reference_1"); never describe or redesign it.
-Every distinctive brief phrase must appear in the prompt.
+uploaded photo or a cast-sheet subject ("the bag in reference_1", "the
+hero from reference_1"); never describe or redesign it. Every distinctive
+phrase from the message must appear in the prompt.
 
 ## Pick a tier
 
@@ -55,9 +56,11 @@ Every distinctive brief phrase must appear in the prompt.
 One line per beat: time range · framing + camera move · action · who.
 
 ```
-0–3s: close-up, slow push-in, <HERO> lifts <PRODUCT> into window light.
+0–3s: close-up, slow push-in, the <HERO> from reference_1 lifts the
+<PRODUCT> from reference_2 into window light.
 3–6s: macro, rack focus to the label; liquid settles.
-6–8s: hero hold, <PRODUCT> front and centered; camera locked.
+6–8s: hero hold, the <PRODUCT> from reference_2 front and centered;
+camera locked.
 ```
 
 ## FULL
@@ -67,12 +70,12 @@ One line per beat: time range · framing + camera move · action · who.
    energy, tone. End with "Keep faces, costumes and locations identical in
    every shot."
 2. **CHARACTERS** — one identity block per person, creature, or product
-   (≤350 chars, from the saved look). Paste it word for word wherever that
-   character appears. With an uploaded photo, write "the <role> from
+   (≤350 chars). Paste it word for word wherever that character appears.
+   With an uploaded photo or a cast sheet, write "the <role> from
    <<<reference_N>>>", never a description.
 3. **LOCATION** — one fixed geography: landmarks and where they sit
    relative to each other. It never changes mid-video.
-4. **SHOTS** — one block per shot-list beat, same order and seconds:
+4. **SHOTS** — one block per beat, same order and seconds:
    `BEAT n (mm:ss–mm:ss) — <title>`, then its cuts: framing + camera move +
    action + who. Add `Speed: REAL TIME` or `SLOW MOTION (~N%)` when the
    speed changes. Cut times are contiguous inside the beat. Hold the payoff.
@@ -98,8 +101,8 @@ One line per beat: time range · framing + camera move · action · who.
 HEADER: <N>s, <ASPECT>, <LOOK>, <GRADE>, <LIGHT>, <LENS + DOF>, <CAMERA ENERGY>, <TONE>. Keep faces, costumes and locations identical in every shot.
 
 CHARACTERS:
-<HERO>: <identity block, ≤350 chars>
-<RIVAL or PRODUCT>: <identity block> | the <role> from <<<reference_1>>>
+<HERO>: the <role> from <<<reference_1>>> | <identity block, ≤350 chars>
+<PRODUCT>: the product from <<<reference_1>>> | <identity block>
 
 LOCATION: <SETTING>. <LANDMARK A> on the left, <LANDMARK B> behind <HERO>, <EXIT> on the right.
 
@@ -119,14 +122,14 @@ AUDIO: bed — <MUSIC/AMBIENCE>. 00:03.4 <impact SFX>; 00:06.2 <payoff sting>. N
 CONTINUITY RULES: <the six rules above>.
 ```
 
-With a voice and text, each beat carries its shot's line and text, and the
-AUDIO opens with the voice:
+With a voice and text, each beat carries its line and text, and the AUDIO
+opens with the voice:
 
 ```
 BEAT 1 (00:00–00:03) — <setup>
   0.0–3.0s: wide, slow push-in. <HERO> <goal action>. Speed: REAL TIME
-  VO: "<the shot's line>"
-  TEXT: <the shot's text>
+  VO: "<the line>"
+  TEXT: <the on-screen text>
 …
 AUDIO: voice — <gender, age, tone, pitch, pace>; lean on "<word>", "<word>". bed — <restrained MUSIC>, under the voice. 00:05.6 <impact SFX> on the turn.
 TEXT STYLE: <one of the three looks below>.
@@ -137,8 +140,8 @@ TEXT STYLE: <one of the three looks below>.
 - Bad: "A fun, energetic scene where the hero has a chaotic morning."
   Good: "3.0–3.6s: close-up, whip pan. The cup slides off the table edge.
   SLOW MOTION (~40%)."
-- Bad: "the same man again". Good: paste his full identity block, word for
-  word.
+- Bad: "the same man again". Good: "the hero from <<<reference_1>>>" or
+  paste his full identity block, word for word.
 - Bad: "in a kitchen". Good: "Kitchen: window on the left, stove behind
   him, door on the right."
 
@@ -166,17 +169,18 @@ TEXT STYLE: <one of the three looks below>.
 
 - Spoken copy: if they asked for a line or brand, write it **verbatim**.
   Pace ≈ 2.2 words/sec against the cut it plays over.
-- Narration you write (sound: narration, when the shot list has no line):
-  one line per beat, ≈2.2 words per second of that beat (a 3s beat ≈ 6
-  words), present tense, plain words, no brand claims they did not make.
-  The lines read as one thought in order; the last one lands the idea
-  ("It's already over."). The duration stays fixed: write only the words
-  the idea needs within it. When the lines run short, the remaining beats
-  play under the bed with no VO — never stretch, repeat, or pad lines to
-  fill the length, and never change the duration to fit them.
+- Narration you write (sound: narration, when they gave no line): one line
+  per beat, ≈2.2 words per second of that beat (a 3s beat ≈ 6 words),
+  present tense, plain words, no brand claims they did not make. The lines
+  read as one thought in order; the last one lands the idea ("It's already
+  over."). The duration stays fixed: write only the words the idea needs
+  within it. When the lines run short, the remaining beats play under the
+  bed with no VO — never stretch, repeat, or pad lines to fill the length,
+  and never change the duration to fit them.
 - Dialogue (sound: dialogue): the speaker is on screen in that cut, named
-  with their identity block; quote the line; one speaker per cut. A
-  presenter talks to camera: eye contact, natural gestures, pauses.
+  with their identity block or "the <name> from reference_N"; quote the
+  line; one speaker per cut. A presenter talks to camera: eye contact,
+  natural gestures, pauses.
 - Music / SFX: if they named a genre or feel, put it in AUDIO (or the beats
   on SHORT). Set `enable_audio` only when the model supports audio. With a
   voice, the bed stays under it; add a click / whoosh when an overlay or a
@@ -185,8 +189,8 @@ TEXT STYLE: <one of the three looks below>.
 
 ## On-screen text
 
-brief.text picks one look; TEXT STYLE: states it once and every beat's
-TEXT: follows it. Text appears only where a TEXT: says so.
+The user's words (or the mode) pick one look; TEXT STYLE: states it once
+and every beat's TEXT: follows it. Text appears only where a TEXT: says so.
 
 Video models render type badly: dense lettering, boxes, arrows, and
 numbers come out garbled. Keep text light — plain bold sans-serif, high

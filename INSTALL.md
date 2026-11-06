@@ -1,12 +1,13 @@
 # Install SocialSight Skills
 
-Three skills ship in this repo. They are one body of instructions for any client that talks to the SocialSight MCP server — Claude, a Google ADK agent, Cursor, Codex. There is no CLI variant.
+Four skills ship in this repo. They are one body of instructions for any client that talks to the SocialSight MCP server — Claude, a Google ADK agent, Cursor, Codex. There is no CLI variant.
 
-- **`media-refs`** — turn URLs, local files, and completed jobs into `media_id` values for `params.medias`
-- **`video-generation`** — discover live model constraints, submit `generate_video`, and report the `job_id`s (credits and HTTP 402: see the skill)
-- **`photo-modes`** — write full photographic prompts for `generate_image` (no backend prompt enhancer)
+- **`media-refs`** — turn URLs, local files, and completed jobs into `media_id` values for `params.medias` (external clients; some hosts do not load it)
+- **`video-generation`** — pick the video model and aspect first, make the cast sheet or key frame, then write the video prompt
+- **`image-generation`** — write full image prompts for stills, edits, cast sheets, and key frames (no backend prompt enhancer)
+- **`marketing-studio`** — pick the ad mode (UGC, TV spot, explainer, app demo, …) before writing prompts
 
-They chain: import media with `media-refs`, then generate video or a still. Photo prompts always go through `generate_image` with catalog values.
+They chain: import media with `media-refs`, make the still a video starts from with `image-generation`, then the clip with `video-generation`.
 
 ## Prerequisites
 
@@ -25,7 +26,7 @@ From a clone of this repository, copy each directory under `skills/` into the ho
 ```bash
 git clone <this-repo> socialsight-skills
 cd socialsight-skills
-cp -R skills/media-refs skills/video-generation skills/photo-modes ~/.claude/skills/
+cp -R skills/media-refs skills/video-generation skills/image-generation skills/marketing-studio ~/.claude/skills/
 ```
 
 Each destination must contain a `SKILL.md` (for example `~/.claude/skills/media-refs/SKILL.md`).
@@ -57,7 +58,7 @@ Inside Claude Code, with this repository as the marketplace source:
 /plugin install socialsight@socialsight
 ```
 
-Pulls `.claude-plugin/marketplace.json` and registers `/socialsight:media-refs`, `/socialsight:video-generation`, and `/socialsight:photo-modes`.
+Pulls `.claude-plugin/marketplace.json` and registers `/socialsight:media-refs`, `/socialsight:video-generation`, `/socialsight:image-generation`, and `/socialsight:marketing-studio`.
 
 ## Option 5 — Google ADK
 
@@ -67,11 +68,11 @@ Point the agent at this repo's `skills/` directory. Every immediate subdirectory
 from google.adk.skills import load_skills_from_dir
 from google.adk.tools.skill_toolset import SkillToolset
 
-skills = load_skills_from_dir("skills")  # list of three Skill objects
+skills = load_skills_from_dir("skills")  # list of Skill objects
 toolset = SkillToolset(skills=skills)
 ```
 
-`load_skills_from_dir("skills")` must return `media-refs`, `video-generation`, and `photo-modes`. Connecting the SocialSight MCP server is still required; the skills only describe how to call it.
+`load_skills_from_dir("skills")` must return `media-refs`, `video-generation`, `image-generation`, and `marketing-studio`. Connecting the SocialSight MCP server is still required; the skills only describe how to call it.
 
 ## Verify
 
@@ -79,14 +80,14 @@ In your agent, ask:
 
 > "Import this image URL and generate a studio product shot."
 
-The agent should load `media-refs` then `photo-modes` (or `video-generation` for a clip), call SocialSight MCP tools, and report a `job_id` without polling.
+The agent should load `media-refs` then `image-generation` (or `video-generation` for a clip — pick the video model and aspect, then the image, then the clip), call SocialSight MCP tools, and report a `job_id` without polling.
 
 ## Updating
 
 | Method | Update command |
 |---|---|
-| Copy | re-copy the three directories from a fresh clone |
-| `npx skills` | re-run `npx skills add ...` |
-| `gh skill install` | `gh skill update <this-repo>` |
+| Copy | re-copy the four directories from a fresh clone, then delete any leftover `photo-modes` (`rm -rf <path>/photo-modes`) so the old skill cannot be selected |
+| `npx skills` | re-run `npx skills add ...`; remove leftover `photo-modes` if still present |
+| `gh skill install` | `gh skill update <this-repo>`; remove leftover `photo-modes` if still present |
 | Claude Code marketplace | `/plugin update socialsight@socialsight` |
-| ADK | pull the repo; `load_skills_from_dir("skills")` reads from disk |
+| ADK | pull the repo; `load_skills_from_dir("skills")` reads from disk; delete any leftover `photo-modes` dir |
