@@ -39,15 +39,17 @@ full.
 
 ## The image a video starts from
 
-Every new video starts from one image (skill `video-generation`):
+Every new video starts from one image (skill `video-generation`). The video
+skill picks the video model and a listed `aspect_ratio` **before** this
+image is made:
 
 - **Cast sheet** — every person, character, animal, or product of the
   video in **one** image, side by side. Template:
-  [references/cast-sheet.md](references/cast-sheet.md).
+  [references/cast-sheet.md](references/cast-sheet.md). Aspect `16:9`.
 - **Key frame** — nothing recurring: the first shot of the video as a still,
-  in the video's aspect ratio, framed and lit as it opens. No motion words.
-
-Use the video's aspect ratio for a key frame and `16:9` for a cast sheet.
+  in the **video model's** listed `aspect_ratio`, framed and lit as it
+  opens. No motion words. Do not invent an aspect — wait for the video
+  skill's `models_explore get`.
 
 ## Start the job
 

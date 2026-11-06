@@ -28,11 +28,11 @@ More options in [INSTALL.md](./INSTALL.md). Agent-driven install (paste into you
 | Skill | Invoke | Description |
 |---|---|---|
 | [`media-refs`](./skills/media-refs) | `/socialsight:media-refs` | Turn URLs, local files, and completed jobs into `media_id` values for `params.medias`. |
-| [`video-generation`](./skills/video-generation) | `/socialsight:video-generation` | Image first (cast sheet or key frame), then discover live model constraints and write the video prompt. |
+| [`video-generation`](./skills/video-generation) | `/socialsight:video-generation` | Pick the video model and aspect, make the cast sheet or key frame, then write the video prompt. |
 | [`image-generation`](./skills/image-generation) | `/socialsight:image-generation` | Write a full image prompt — studio / lifestyle / editorial stills, edits, cast sheets, and key frames. |
 | [`marketing-studio`](./skills/marketing-studio) | `/socialsight:marketing-studio` | Pick the ad mode (UGC, tutorial, unboxing, review, showcase, TV spot, try-on, conceptual, explainer, app demo) before the prompts. |
 
-They chain: import with `media-refs`, then make the still (`image-generation`) a video starts from, then the clip (`video-generation`). The catalog is **not** duplicated here. Agents query `models_explore` at runtime so values cannot drift. `media-refs` stays in the repo for external clients; some hosts do not load it.
+They chain: import with `media-refs`, pick the video model and aspect (`video-generation`), make the still a video starts from (`image-generation`), then the clip. The catalog is **not** duplicated here. Agents query `models_explore` at runtime so values cannot drift. `media-refs` stays in the repo for external clients; some hosts do not load it.
 
 ### Image treatments
 
@@ -53,7 +53,7 @@ They chain: import with `media-refs`, then make the still (`image-generation`) a
 |---|---|---|
 | Import a URL or local file | `media-refs` | `params.medias[].value` is a `media_id` or completed `job_id`, never a URL |
 | Chain a following clip from the last frame | `media-refs` | Use MediaItem `last_frame_media_id` as `start_image` |
-| Make a video | `video-generation` | Image first; then query `models_explore`; never send schema defaults |
+| Make a video | `video-generation` | Pick video model + aspect via `models_explore`, then the image, then the clip; never send schema defaults |
 | Studio / lifestyle / editorial still, cast sheet, key frame | `image-generation` | Prompts are written in full — no backend enhancer |
 | Ad feel (UGC, TV spot, explainer, …) | `marketing-studio` | Pick one mode from the user's words |
 | How a job is started and paid | host rule, else `video-generation/references/submit.md` | Some hosts save a plan and submit later |
