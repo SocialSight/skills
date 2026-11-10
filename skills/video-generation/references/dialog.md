@@ -32,8 +32,10 @@ pitch, dance, music, or spoken line, **that is the video**. Never write
 "not a product ad", never replace the ask with the still's scene, and never
 describe the job as "animate the attached stills".
 
-Image uploads and the cast sheet / key frame are identity only (face,
-clothes, pack); setting and plot come from the message. One exception: a
+Image uploads are identity only (face, clothes, pack);
+setting and plot come from the message. A storyboard the user approved is
+the plan: the beats follow its panels, same order and seconds. One
+exception: a
 screenshot (an app, a website, a chart, a document) is an overlay, not a
 character — the beat says where it sits over the frame ("the listing from
 <<<reference_2>>> slides in over her left shoulder") and what the presenter
@@ -42,7 +44,7 @@ keeps its structure, motion, timing, and audio, so the prompt states only
 the change ("make her jacket red"), never new beats or a new length.
 Match each upload by its kind (image / video / audio) and the user's words
 ("this bag" + one photo → the photo), never by upload order. Name an
-uploaded photo or a cast-sheet subject ("the bag in reference_1", "the
+uploaded photo or a storyboard subject ("the bag in reference_1", "the
 hero from reference_1"); never describe or redesign it. Every distinctive
 phrase from the message must appear in the prompt.
 
@@ -71,7 +73,7 @@ camera locked.
    every shot."
 2. **CHARACTERS** — one identity block per person, creature, or product
    (≤350 chars). Paste it word for word wherever that character appears.
-   With an uploaded photo or a cast sheet, write "the <role> from
+   With an uploaded photo or the storyboard, write "the <role> from
    <<<reference_N>>>", never a description.
 3. **LOCATION** — one fixed geography: landmarks and where they sit
    relative to each other. It never changes mid-video.

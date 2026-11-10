@@ -3,11 +3,11 @@
 Four skills ship in this repo. They are one body of instructions for any client that talks to the SocialSight MCP server — Claude, a Google ADK agent, Cursor, Codex. There is no CLI variant.
 
 - **`media-refs`** — turn URLs, local files, and completed jobs into `media_id` values for `params.medias` (external clients; some hosts do not load it)
-- **`video-generation`** — pick the video model and aspect first, make the cast sheet or key frame, then write the video prompt
-- **`image-generation`** — write full image prompts for stills, edits, cast sheets, and key frames (no backend prompt enhancer)
+- **`video-generation`** — pick the video model and aspect first, make the storyboard (4–6 panels), then write the video prompt
+- **`image-generation`** — write full image prompts for stills, edits, storyboards, and cast sheets (no backend prompt enhancer)
 - **`marketing-studio`** — pick the ad mode (UGC, TV spot, explainer, app demo, …) before writing prompts
 
-They chain: import media with `media-refs`, make the still a video starts from with `image-generation`, then the clip with `video-generation`.
+They chain: import media with `media-refs`, make the storyboard with `image-generation`, then the clip with `video-generation`.
 
 ## Prerequisites
 
@@ -80,7 +80,7 @@ In your agent, ask:
 
 > "Import this image URL and generate a studio product shot."
 
-The agent should load `media-refs` then `image-generation` (or `video-generation` for a clip — pick the video model and aspect, then the image, then the clip), call SocialSight MCP tools, and report a `job_id` without polling.
+The agent should load `media-refs` then `image-generation` (or `video-generation` for a clip — pick the video model and aspect, then the storyboard, then the clip), call SocialSight MCP tools, and report a `job_id` without polling.
 
 ## Updating
 

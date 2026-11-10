@@ -2,8 +2,8 @@
 name: image-generation
 description: >
   Use when the user wants a still through SocialSight MCP: a new image, an
-  edit of a photo, product or campaign photography, or the image a video
-  starts from (a cast sheet with every character, or a key frame). Picks the
+  edit of a photo, product or campaign photography, a character sheet, or
+  the storyboard a video starts from (4–6 panels, one per beat). Picks the
   model and writes the image prompt in full.
 ---
 
@@ -17,13 +17,16 @@ full.
 ## Model
 
 - Default: **`GEMINI_3_IMAGE`** (Nano Banana Pro) — best identity hold across
-  views; the default for cast sheets.
+  views; the default for storyboards and cast sheets.
 - **`OPENAI_IMAGE_2_5`** (GPT Image) — text on the image, graphic layouts.
 - **`QWEN_IMAGE_3_0_PRO`** — when they ask for Flexible / fewer restrictions.
 - A model the user named wins.
 - One `models_explore(action="get", model_id=...)` and copy `quality` and
   `aspect_ratio` verbatim. Quality `2K` unless they asked sharper (`4K` if
   listed). Never schema defaults.
+- The prompt never names the model and never uses model-specific syntax
+  (e.g. `@Image1`); reference media by role ("the <role> from
+  reference_N"). The model can change after the prompt is written.
 
 ## Edit vs new
 
@@ -37,22 +40,24 @@ full.
   banner, editorial) from [references/modes.md](references/modes.md).
 - Text on the image: quote the exact words, where they sit, how they look.
 
-## The image a video starts from
+## The storyboard a video starts from
 
-Every new video starts from one image (skill `video-generation`). The video
-skill picks the video model and a listed `aspect_ratio` **before** this
-image is made:
+Every video starts from one **storyboard** (skill `video-generation`): 4–6
+panels, one per beat of the video, in order, each in the **video model's**
+listed `aspect_ratio`. Template:
+[references/storyboard.md](references/storyboard.md). Do not invent the
+aspect — wait for the video skill's `models_explore get`.
 
-- **Cast sheet** — every person, character, animal, or product of the
-  video in **one** image, side by side. Template:
-  [references/cast-sheet.md](references/cast-sheet.md). Aspect `16:9` if
-  the image model lists it, else the closest wide one it lists.
-- **Key frame** — nothing recurring: the first shot of the video as a still,
-  in the **video model's** listed `aspect_ratio`, framed and lit as it
-  opens. No motion words. Do not invent an aspect — wait for the video
-  skill's `models_explore get`. If the image model does not list that
-  aspect, use the closest one it lists, or another image model that lists
-  it.
+- People, animals, products, and places all live in the panels, identical
+  from panel to panel; an uploaded photo is "the <role> from reference_N".
+- An edit of a clip: the panels are that clip's beats with the change
+  applied. Image models take no video: write the scenes from what the clip
+  shows (setting, framing, light, poses) plus the change.
+- A change to the storyboard keeps every earlier change.
+
+A **cast sheet** ([references/cast-sheet.md](references/cast-sheet.md)) is
+only for an explicit ask for character / product sheets, never a video's
+preview.
 
 ## Start the job
 

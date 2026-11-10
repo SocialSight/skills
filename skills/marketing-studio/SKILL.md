@@ -38,9 +38,11 @@ the user asks for another.
 
 ## Writing it
 
-- Storyboard stills are frames: framing, light, and pose only. For the
-  cast sheet a video starts from, use skill `image-generation`,
-  [references/cast-sheet.md](../image-generation/references/cast-sheet.md).
+- Storyboard stills are frames: framing, light, and pose only. The video
+  starts from a storyboard (skill `image-generation`,
+  [references/storyboard.md](../image-generation/references/storyboard.md)).
+  A cast sheet is only for an explicit character / product sheet ask
+  ([references/cast-sheet.md](../image-generation/references/cast-sheet.md)).
 - Video beats follow skill `video-generation`,
   [references/motion.md](../video-generation/references/motion.md): camera ·
   action · motion · sound, one camera move per beat.

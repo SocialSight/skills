@@ -15,10 +15,10 @@ Primitive-arg tools are top-level: `models_explore`, `get_generation_models`,
 
 Media goes in `params.medias` as `[{ "value": "<media_id or completed job_id>", "role": "..." }]`. Never a URL — import first (skill `media-refs`). On `generate_image`, `role` is ignored; only `value` matters.
 
-## Model, then image, then video
+## Model, then storyboard, then video
 
 After `models_explore get` on the video model (aspect and `medias[].roles`
-fixed), submit the cast sheet or key frame, report its `job_id`, and stop.
+fixed), submit the storyboard, report its `job_id`, and stop.
 Make the video on a later turn, once that job is complete, with that
 `job_id` in `params.medias` using only a role the model lists.
 
