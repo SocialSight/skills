@@ -30,8 +30,11 @@ A video is never made from words alone. Order:
 - **An edit of a source clip** (attached, or made in this chat): the panels
   are that clip's beats with the change applied. The clip stays the video's
   source.
-- **A photo attached to animate** ("animate this photo"): that photo is the
-  preview. No storyboard.
+- **A photo to animate** (attached, or made in this chat) when they only
+  ask to make it move ("animate this photo", "now make it a video"): that
+  photo is the preview. No storyboard. If they describe a new video with
+  it in it (a scene, a story, cinematic shots), make the storyboard first;
+  the photo only lends the look.
 - Tell the user the plan in one line, in their language: "First a
   storyboard of the video so you can see it — then the video."
 - The video waits until the storyboard is done: a reference must be a
