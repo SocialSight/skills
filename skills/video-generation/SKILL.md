@@ -5,15 +5,13 @@ description: >
   a clip from a photo, or an edit of a clip. Every video starts from a
   storyboard image the user approves first: 4–6 panels, one per beat. Picks
   the model and writes the video prompt from the live catalog.
+compatibility: "Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it."
 ---
-
-Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it.
 
 # Video generation
 
-You are an expert at motion and campaign video. Every video starts from a
-preview image the user sees and approves first — a storyboard for a new
-video, a cast sheet for an edit of a clip — and the
+You are an expert at motion and campaign video. Every video — new or an
+edit — starts from a storyboard the user sees and approves first, and the
 video prompt is written in full — nothing downstream expands it.
 
 ## 1. Model, then storyboard, then video
@@ -28,13 +26,11 @@ A video is never made from words alone. Order:
 3. Wait until that image is done, then submit the video.
 
 - **One** storyboard per video, never one image per character.
-- **An edit of a source clip** (attached, or made in this chat): no
-  storyboard. You cannot see the clip, so its beats stay its own. Make one
-  **cast sheet** instead (skill `image-generation`,
-  `references/cast-sheet.md`): every person, animal, or product the edit
-  puts into the clip, in one image. The clip stays the video's source. An
-  edit that brings nothing new to show (a color grade, removing a logo)
-  needs no preview.
+- **An edit of a source clip** (attached, or made in this chat): the panels
+  are the video they asked for, beat by beat. You cannot see the clip:
+  build them from what they said and from the photos they attached, and
+  never invent what the clip looks like. The clip stays the video's
+  source and gives the motion.
 - **A photo to animate** (attached, or made in this chat) when they only
   ask to make it move ("animate this photo", "now make it a video"): that
   photo is the preview. No storyboard. If they describe a new video with
@@ -47,11 +43,11 @@ A video is never made from words alone. Order:
 - A change the user asks for is a new version of the storyboard, with every
   earlier change kept.
 - On the video, bind the storyboard as `role: "image"` (it is a grid —
-  never `start_image`), only if the model's `medias[].roles` lists it. The
-  video's beats follow the panels, same order and seconds. On an edit, the
-  source clip keeps `role: "video"` and gives the motion, and the cast
-  sheet binds as `role: "image"`. The prompt names each subject "the
-  <name> from reference_N" and never re-describes them.
+  never `start_image`), only if the model's `medias[].roles` lists it. On a
+  new video, the beats follow the panels, same order and seconds. On an
+  edit, the source clip keeps `role: "video"` and is the video: the
+  storyboard only shows who and what goes in. The prompt names each subject
+  "the <name> from reference_N" and never re-describes them.
 
 ## 2. Model
 
@@ -99,8 +95,14 @@ Load [references/dialog.md](references/dialog.md). In short:
   tutorial, unboxing, review, product showcase, TV spot, try-on,
   surreal/CGI, explainer, app demo (skill `marketing-studio` for the table).
   Say it in plain words, never the slug.
-- An edit of a source clip states only the change; it keeps the source's
-  motion, timing, and audio. Pass `enable_audio` only when the model
+- An edit of a source clip states only the change (who or what replaces
+  what, new lines or captions); it keeps the source's shots, motion,
+  timing, and audio. No header, shot list, beats, camera moves, or location
+  on an edit: they describe a new video, and the model makes that one
+  instead of editing the clip. New speech or on-screen text is still
+  written out in full: each spoken line in quotes, in order, short enough
+  for the clip's length; subtitles are those same words; one text look
+  (`references/dialog.md`). Pass `enable_audio` only when the model
   declares audio.
 - N variations = N separate prompts and N calls; `count` stays 1.
 

@@ -5,9 +5,8 @@ description: >
   edit of a photo, product or campaign photography, a character sheet, or
   the storyboard a video starts from (4–6 panels, one per beat). Picks the
   model and writes the image prompt in full.
+compatibility: "Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it."
 ---
-
-Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it.
 
 # Image generation
 
