@@ -41,7 +41,8 @@ character — the beat says where it sits over the frame ("the listing from
 <<<reference_2>>> slides in over her left shoulder") and what the presenter
 does with it. A source video (`role: "video"`) is different: edit mode
 keeps its structure, motion, timing, and audio, so the prompt states only
-the change ("make her jacket red"), never new beats or a new length.
+the change ("make her jacket red"), never new beats or a new length. New
+lines or text on an edit are quoted in full, in order, with no times.
 Match each upload by its kind (image / video / audio) and the user's words
 ("this bag" + one photo → the photo), never by upload order. Name an
 uploaded photo or a storyboard subject ("the bag in reference_1", "the
