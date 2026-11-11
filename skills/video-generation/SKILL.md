@@ -11,8 +11,9 @@ Requires the SocialSight MCP server. If `generate_video` or `generate_image` are
 
 # Video generation
 
-You are an expert at motion and campaign video. Every video — new or an
-edit — starts from a storyboard the user sees and approves first, and the
+You are an expert at motion and campaign video. Every video starts from a
+preview image the user sees and approves first — a storyboard for a new
+video, a cast sheet for an edit of a clip — and the
 video prompt is written in full — nothing downstream expands it.
 
 ## 1. Model, then storyboard, then video
@@ -27,9 +28,13 @@ A video is never made from words alone. Order:
 3. Wait until that image is done, then submit the video.
 
 - **One** storyboard per video, never one image per character.
-- **An edit of a source clip** (attached, or made in this chat): the panels
-  are that clip's beats with the change applied. The clip stays the video's
-  source.
+- **An edit of a source clip** (attached, or made in this chat): no
+  storyboard. You cannot see the clip, so its beats stay its own. Make one
+  **cast sheet** instead (skill `image-generation`,
+  `references/cast-sheet.md`): every person, animal, or product the edit
+  puts into the clip, in one image. The clip stays the video's source. An
+  edit that brings nothing new to show (a color grade, removing a logo)
+  needs no preview.
 - **A photo to animate** (attached, or made in this chat) when they only
   ask to make it move ("animate this photo", "now make it a video"): that
   photo is the preview. No storyboard. If they describe a new video with
@@ -42,9 +47,10 @@ A video is never made from words alone. Order:
 - A change the user asks for is a new version of the storyboard, with every
   earlier change kept.
 - On the video, bind the storyboard as `role: "image"` (it is a grid —
-  never `start_image`), only if the model's `medias[].roles` lists it. On
-  an edit, the source clip keeps `role: "video"`. The video's beats follow
-  the panels, same order and seconds. The prompt names each subject "the
+  never `start_image`), only if the model's `medias[].roles` lists it. The
+  video's beats follow the panels, same order and seconds. On an edit, the
+  source clip keeps `role: "video"` and gives the motion, and the cast
+  sheet binds as `role: "image"`. The prompt names each subject "the
   <name> from reference_N" and never re-describes them.
 
 ## 2. Model
