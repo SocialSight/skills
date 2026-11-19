@@ -22,9 +22,9 @@
           "invoke": "/socialsight:video-generation"
         },
         {
-          "name": "photo-modes",
-          "path": "skills/photo-modes",
-          "invoke": "/socialsight:photo-modes"
+          "name": "image-generation",
+          "path": "skills/image-generation",
+          "invoke": "/socialsight:image-generation"
         },
         {
           "name": "marketing-studio",
