@@ -20,19 +20,20 @@ Detect the agent platform:
 | Cursor | `~/.cursor/skills/` |
 | ADK / other | `~/.agents/skills/` |
 
-Locate this repository (clone it if the user gave a git URL; otherwise use the workspace copy). Copy the three skill directories into the path above:
+Locate this repository (clone it if the user gave a git URL; otherwise use the workspace copy). Copy the four skill directories into the path above:
 
 ```bash
-cp -R skills/media-refs skills/video-generation skills/photo-modes <path>
+cp -R skills/media-refs skills/video-generation skills/image-generation skills/marketing-studio <path>
 ```
 
 Each of these files must exist when you are done:
 
 - `<path>/media-refs/SKILL.md`
 - `<path>/video-generation/SKILL.md`
-- `<path>/photo-modes/SKILL.md`
+- `<path>/image-generation/SKILL.md`
+- `<path>/marketing-studio/SKILL.md`
 
-For a Google ADK agent that loads from disk instead of `~/.agents/skills/`, do not copy. Keep the repo's `skills/` directory and load it with `load_skills_from_dir("skills")`. That call must return all three skills.
+For a Google ADK agent that loads from disk instead of `~/.agents/skills/`, do not copy. Keep the repo's `skills/` directory and load it with `load_skills_from_dir("skills")`. That call must return all four skills.
 
 ## Step 3 — Verify
 

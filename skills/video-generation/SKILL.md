@@ -1,56 +1,113 @@
 ---
 name: video-generation
 description: >
-  Use when generating, animating, editing, or extending video through
-  SocialSight MCP. Use when the user asks to make a clip, animate a still, add
-  start or end frames, attach reference images, video, or audio, quote video
-  credits, choose duration, resolution, or aspect ratio, submit generate_video,
-  or names Seedance, Veo, or Kling. Use before any video job so catalog values
-  replace schema defaults.
+  Use when the user wants a video through SocialSight MCP: a new clip, an ad,
+  a clip from a photo, or an edit of a clip. Every video starts from a
+  storyboard image the user approves first: 4–6 panels, one per beat. Picks
+  the model and writes the video prompt from the live catalog.
+compatibility: "Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it."
 ---
-
-Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it.
 
 # Video generation
 
-## Call shape
+You are an expert at motion and campaign video. Every video — new or an
+edit — starts from a storyboard the user sees and approves first, and the
+video prompt is written in full — nothing downstream expands it.
 
-`generate_video` nests arguments under a required `params` object:
+## 1. Model, then storyboard, then video
 
-```json
-{ "params": { "model": "SEEDANCE_2_5", "prompt": "..." } }
-```
+A video is never made from words alone. Order:
 
-Primitive-arg tools are top-level: `models_explore`, `get_generation_models`, `job_status`, `job_display`, `balance`, `transactions`.
+1. Pick the video model and a listed `aspect_ratio` (and duration) — §2.
+2. Plan the beats, then make the **storyboard**: one image with 4–6
+   panels, one per beat, in order, each panel in that aspect (skill
+   `image-generation`, `references/storyboard.md`). People, animals,
+   products, and places all live in the panels, identical panel to panel.
+3. Wait until that image is done, then submit the video.
 
-Media goes in `params.medias` as `[{ "value": "<media_id or completed job_id>", "role": "..." }]`. Never a URL. Import first (skill `media-refs`).
+- **One** storyboard per video, never one image per character.
+- **An edit of a source clip** (attached, or made in this chat): the panels
+  are the video they asked for, beat by beat. You cannot see the clip:
+  build them from what they said and from the photos they attached, and
+  never invent what the clip looks like. The clip stays the video's
+  source and gives the motion.
+- **A photo to animate** (attached, or made in this chat) when they only
+  ask to make it move ("animate this photo", "now make it a video"): that
+  photo is the preview. No storyboard. If they describe a new video with
+  it in it (a scene, a story, cinematic shots), make the storyboard first;
+  the photo only lends the look.
+- Tell the user the plan in one line, in their language: "First a
+  storyboard of the video so you can see it — then the video."
+- The video waits until the storyboard is done: a reference must be a
+  finished image (a `media_id` or a completed `job_id`).
+- A change the user asks for is a new version of the storyboard, with every
+  earlier change kept.
+- On the video, bind the storyboard as `role: "image"` (it is a grid —
+  never `start_image`), only if the model's `medias[].roles` lists it. On a
+  new video, the beats follow the panels, same order and seconds. On an
+  edit, the source clip keeps `role: "video"` and is the video: the
+  storyboard only shows who and what goes in. The prompt names each subject
+  "the <name> from reference_N" and never re-describes them.
 
-## Discover before generating
+## 2. Model
 
-Call `models_explore(action="get", model_id=...)` and read `durations`, `resolutions`, `qualities`, `aspect_ratios`, `medias[].roles`, and `parameters[].options`. These are exact value lists, not ranges. Do not restate or cache the catalog — query it.
+- Default video: **`SEEDANCE_2_5`** — reference images, reference video,
+  long durations, audio.
+- A model the user named wins.
+- A long source edit needs a model whose max duration covers the source.
+- **Before the storyboard and before any video**, one
+  `models_explore(action="get", model_id=...)` and copy `duration`,
+  `resolution`, `aspect_ratio`, and `medias[].roles` verbatim. Never schema
+  defaults (`duration: 5`, `resolution: "720p"`). Storyboard panels use
+  that `aspect_ratio`; the storyboard sheet is `16:9` (or the closest wide
+  aspect the image model lists). Details:
+  [references/model-discovery.md](references/model-discovery.md),
+  [references/constraints.md](references/constraints.md).
 
-**Never use the tool schema defaults.** The schema defaults to `resolution: "720p"` (lowercase) while the catalog publishes `"720P"` (uppercase), and to `duration: 5`, which is invalid on models like VEO3_1_LITE that only accept `[4, 6, 8]`. Both fail. Values always come from the catalog.
+Typical placements (map to an exact catalog string):
 
-Load [references/model-discovery.md](references/model-discovery.md) for the discovery workflow.
+- Reels / Stories / TikTok → `9:16`
+- Feed portrait → `4:5`
+- Landscape / YouTube → `16:9`
+- Short ad → a listed duration near `8` seconds
 
-## Duration
+A number of seconds the user gives is the duration: "make it 15s", "15
+seconds long", "longer, 15s" → 15 (not "more than 15"). Use that value if
+the model lists it, else the nearest listed value, and say so in one line
+in their language. Storyboard panel time ranges add up to that duration.
+On an existing clip, a different length is a new video (a new storyboard;
+the old clip only lends the look), not an edit — an edit keeps the source
+length.
 
-`supported_durations` / `durations` is a discrete list, not a min/max range. Some models publish an empty list and take no `duration` at all (KLING_2_6_MOTION). When a requested duration is not in the list, round to an allowed value and adjust the shot rather than sending the requested number.
+## 3. The prompt
 
-## Budget
+Load [references/dialog.md](references/dialog.md). In short:
 
-Read `medias[]` on the catalog entry. `start_image` and `end_image` consume the `reference_image` budget (`counts_toward`). On SEEDANCE_2_5 that is `#ref_image + #start_frame + #end_frame ≤ 30`. On VEO3_1, `max_inputs: 3` — anchor + start + end saturates it. Do **not** use `max_reference_inputs` for the image cap — on 2.5 that is 50 and counts all inputs. Details in [references/constraints.md](references/constraints.md).
+- English. The latest user message is the story; uploads are identity, not
+  the plot. The approved storyboard is the plan: beats follow its panels.
+- The prompt never names the model and never uses model-specific syntax
+  (e.g. `@Image1`); reference media by role ("the <role> from
+  reference_N"). The model can change after the prompt is written.
+- ≤8s or one beat → SHORT (timed beats). Longer → FULL (header, characters,
+  location, shots, audio, continuity).
+- One camera move per beat ([references/motion.md](references/motion.md)).
+- An ad: pick one feel from their words — real person on a phone (UGC),
+  tutorial, unboxing, review, product showcase, TV spot, try-on,
+  surreal/CGI, explainer, app demo (skill `marketing-studio` for the table).
+  Say it in plain words, never the slug.
+- An edit of a source clip states only the change (who or what replaces
+  what, new lines or captions); it keeps the source's shots, motion,
+  timing, and audio. No header, shot list, beats, camera moves, or location
+  on an edit: they describe a new video, and the model makes that one
+  instead of editing the clip. New speech or on-screen text is still
+  written out in full: each spoken line in quotes, in order, short enough
+  for the clip's length; subtitles are those same words; one text look
+  (`references/dialog.md`). Pass `enable_audio` only when the model
+  declares audio.
+- N variations = N separate prompts and N calls; `count` stays 1.
 
-## Cost, then submit, then stop
+## 4. Start the job
 
-1. Quote the whole plan with `get_cost: true`. Returns `{ credits, model_id, job_type }` and creates no job.
-2. Submit `generate_video` without `get_cost`.
-3. The response carries `polling: "client_side"` and `agent_action: "report_job_id_and_stop"`. Report the `job_id` and end the turn. Do **not** call `job_status` — the client polls it, respecting `poll_after_seconds` (3 pending, 5 processing, null when terminal).
-
-`count` is reserved. The schema publishes 1–4 but the payload rejects anything above 1. N variations means N separate calls. Omit `count` or set it to 1.
-
-## Author vs edit
-
-With a source video (`role: "video"`), edit mode preserves the source structure, motion, timing, and audio. Without one, generation is from scratch and the audio is newly generated via `enable_audio` — not the original. Pass `enable_audio` only when the selected model declares audio support.
-
-Errors: [references/errors.md](references/errors.md).
+How a job is started and paid depends on the host. Without a host rule, follow
+[references/submit.md](references/submit.md). Errors:
+[references/errors.md](references/errors.md).

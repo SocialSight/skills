@@ -7,9 +7,8 @@ description: >
   previous generation as a reference, start frame, or end frame; supplies a
   product photo, face, or clip to condition a job; or when params.medias must
   be filled from a media_id or a completed job_id rather than a URL.
+compatibility: "Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it."
 ---
-
-Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it.
 
 # Media refs
 

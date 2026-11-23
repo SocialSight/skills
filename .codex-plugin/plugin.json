@@ -14,7 +14,8 @@
     "image-generation",
     "video-generation",
     "media-upload",
-    "product-photography"
+    "product-photography",
+    "marketing-studio"
   ],
   "skills": "./skills",
   "interface": {
