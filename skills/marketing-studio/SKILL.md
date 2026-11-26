@@ -38,8 +38,9 @@ the user asks for another.
 
 ## Writing it
 
-- Storyboard stills are frames: framing, light, and pose only. The video
-  starts from a storyboard (skill `image-generation`,
+- Storyboard stills are frames: framing, light, and pose only. A
+  storyboard is made only when the user asks to see the video first (skill
+  `image-generation`,
   [references/storyboard.md](../image-generation/references/storyboard.md)).
   A cast sheet is only for an explicit character / product sheet ask
   ([references/cast-sheet.md](../image-generation/references/cast-sheet.md)).

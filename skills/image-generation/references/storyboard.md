@@ -1,9 +1,9 @@
 # Storyboard
 
-One image that previews what happens in the video: 4–6 panels, one per beat,
-in order. Every video starts from it — with people, animals, products, or
-just a place. The video binds it as a reference image (never as its first
-frame — it is a grid). Write it in English.
+One image that previews what happens in a video: 4–6 panels, one per beat,
+in order. Made only when the user asks to see the video first. The video
+binds it as a reference image (never as its first frame: it is a grid).
+Write it in English.
 
 ## Template
 
@@ -33,10 +33,10 @@ Nothing recurring (a place, b-roll): drop the Subjects block.
 
 ## Edit of a clip
 
-The panels are the source clip's beats, in its order, with the change
-applied ("the two fighters are now a Siamese and a calico cat"). Image
-models cannot see video: write each panel from what the clip shows
-(setting, framing, light, poses), then the change. Panel aspect = the
+The panels are the video they asked for, beat by beat, with the change
+applied ("the two fighters are now a Siamese and a calico cat"). Nobody
+can see the clip: build the panels from what they said and the photos they
+attached, and never invent what the clip looks like. Panel aspect = the
 clip's.
 
 ## Rules

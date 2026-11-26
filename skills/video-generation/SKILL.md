@@ -2,111 +2,80 @@
 name: video-generation
 description: >
   Use when the user wants a video through SocialSight MCP: a new clip, an ad,
-  a clip from a photo, or an edit of a clip. Every video starts from a
-  storyboard image the user approves first: 4–6 panels, one per beat. Picks
-  the model and writes the video prompt from the live catalog.
+  a clip from a photo, or an edit of a clip. Picks the model and its values
+  from the live catalog and writes the video prompt in full. A storyboard
+  preview is made only when the user asks for one.
 compatibility: "Requires the SocialSight MCP server. If `generate_video` or `generate_image` are unavailable, stop and tell the user to connect it."
 ---
 
 # Video generation
 
-You are an expert at motion and campaign video. Every video — new or an
-edit — starts from a storyboard the user sees and approves first, and the
-video prompt is written in full — nothing downstream expands it.
+The video prompt is written in full: nothing downstream expands it.
 
-## 1. Model, then storyboard, then video
+## 1. Model
 
-A video is never made from words alone. Order:
+- Default: **`SEEDANCE_2_5`** (reference images, reference video, long
+  durations, audio). A model the user named wins.
+- One `models_explore(action="get", model_id=...)` first, unless the host
+  already gave you the model's values. Copy `duration`, `resolution`,
+  `aspect_ratio`, and `medias[].roles` verbatim, never schema defaults
+  (`duration: 5`, `resolution: "720p"`). Reading the limits:
+  [references/constraints.md](references/constraints.md). Finding a model:
+  [references/model-discovery.md](references/model-discovery.md).
+- Aspect ratio: what they asked for, else `9:16` (Reels, Stories, TikTok,
+  Shorts). Feed portrait → `4:5`. YouTube or landscape → `16:9`. Always an
+  exact string the model lists.
+- Duration: seconds the user gives are the duration ("make it 15s",
+  "longer, 15s" → 15, not "more than 15"). Use that value if the model
+  lists it, else the nearest listed one, and say so in one line. No length
+  given → a listed value near 8 seconds.
 
-1. Pick the video model and a listed `aspect_ratio` (and duration) — §2.
-2. Plan the beats, then make the **storyboard**: one image with 4–6
-   panels, one per beat, in order, each panel in that aspect (skill
-   `image-generation`, `references/storyboard.md`). People, animals,
-   products, and places all live in the panels, identical panel to panel.
-3. Wait until that image is done, then submit the video.
+## 2. New video, photo, or edit
 
-- **One** storyboard per video, never one image per character.
-- **An edit of a source clip** (attached, or made in this chat): the panels
-  are the video they asked for, beat by beat. You cannot see the clip:
-  build them from what they said and from the photos they attached, and
-  never invent what the clip looks like. The clip stays the video's
-  source and gives the motion.
-- **A photo to animate** (attached, or made in this chat) when they only
-  ask to make it move ("animate this photo", "now make it a video"): that
-  photo is the preview. No storyboard. If they describe a new video with
-  it in it (a scene, a story, cinematic shots), make the storyboard first;
-  the photo only lends the look.
-- Tell the user the plan in one line, in their language: "First a
-  storyboard of the video so you can see it — then the video."
-- The video waits until the storyboard is done: a reference must be a
-  finished image (a `media_id` or a completed `job_id`).
-- A change the user asks for is a new version of the storyboard, with every
+- **A new video** is made from their words. Photos they attached are
+  identity (who or what is in it), not the plot.
+- **A photo to animate** ("animate this", "now make it a video") is a new
+  video that starts from that photo and keeps its subject and look.
+- **An edit of a clip** keeps the clip as the video: its shots, motion,
+  timing, length, and audio. It is bound as `role: "video"`. You cannot see
+  it, so never invent what it shows. A different length or a new story is
+  a new video, not an edit: the old clip only lends the look.
+
+## 3. A storyboard, only when they ask
+
+Make one only when the user asks to see the video before it is made
+("show me a storyboard first"). Never on your own.
+
+- One image, 4–6 panels, one per beat, each panel in the video's aspect
+  (skill `image-generation`, `references/storyboard.md`). Never one image
+  per character.
+- The video comes after it is done. Bind it as `role: "image"` if the model
+  lists that role (it is a grid, never `start_image`). The video's beats
+  follow its panels, same order and seconds.
+- A change they ask for is a new version of the storyboard, with every
   earlier change kept.
-- On the video, bind the storyboard as `role: "image"` (it is a grid —
-  never `start_image`), only if the model's `medias[].roles` lists it. On a
-  new video, the beats follow the panels, same order and seconds. On an
-  edit, the source clip keeps `role: "video"` and is the video: the
-  storyboard only shows who and what goes in. The prompt names each subject
-  "the <name> from reference_N" and never re-describes them.
 
-## 2. Model
+## 4. The prompt
 
-- Default video: **`SEEDANCE_2_5`** — reference images, reference video,
-  long durations, audio.
-- A model the user named wins.
-- A long source edit needs a model whose max duration covers the source.
-- **Before the storyboard and before any video**, one
-  `models_explore(action="get", model_id=...)` and copy `duration`,
-  `resolution`, `aspect_ratio`, and `medias[].roles` verbatim. Never schema
-  defaults (`duration: 5`, `resolution: "720p"`). Storyboard panels use
-  that `aspect_ratio`; the storyboard sheet is `16:9` (or the closest wide
-  aspect the image model lists). Details:
-  [references/model-discovery.md](references/model-discovery.md),
-  [references/constraints.md](references/constraints.md).
+Written as [references/dialog.md](references/dialog.md) sets out. In short:
 
-Typical placements (map to an exact catalog string):
+- English. The latest user message is the story.
+- Never name the model or use model-specific syntax (`@Image1`). Bound
+  media is "the <name> from reference_N", never re-described. The model can
+  change after the prompt is written.
+- ≤8s or one beat → SHORT (timed beats). Longer → FULL. One camera move
+  per beat ([references/motion.md](references/motion.md)).
+- An ad takes one feel from their words (skill `marketing-studio`), said in
+  plain words, never the slug.
+- An edit states only the change: who or what replaces what, and any new
+  lines or captions. No header, shot list, beats, camera moves, or
+  location: the model would make that video instead of editing the clip.
+  New speech or on-screen text is written out in full: each line in quotes,
+  in order, short enough for the clip; subtitles are those same words.
+- `enable_audio` only when the model declares audio.
+- N variations are N prompts and N calls; `count` stays 1.
 
-- Reels / Stories / TikTok → `9:16`
-- Feed portrait → `4:5`
-- Landscape / YouTube → `16:9`
-- Short ad → a listed duration near `8` seconds
-
-A number of seconds the user gives is the duration: "make it 15s", "15
-seconds long", "longer, 15s" → 15 (not "more than 15"). Use that value if
-the model lists it, else the nearest listed value, and say so in one line
-in their language. Storyboard panel time ranges add up to that duration.
-On an existing clip, a different length is a new video (a new storyboard;
-the old clip only lends the look), not an edit — an edit keeps the source
-length.
-
-## 3. The prompt
-
-Load [references/dialog.md](references/dialog.md). In short:
-
-- English. The latest user message is the story; uploads are identity, not
-  the plot. The approved storyboard is the plan: beats follow its panels.
-- The prompt never names the model and never uses model-specific syntax
-  (e.g. `@Image1`); reference media by role ("the <role> from
-  reference_N"). The model can change after the prompt is written.
-- ≤8s or one beat → SHORT (timed beats). Longer → FULL (header, characters,
-  location, shots, audio, continuity).
-- One camera move per beat ([references/motion.md](references/motion.md)).
-- An ad: pick one feel from their words — real person on a phone (UGC),
-  tutorial, unboxing, review, product showcase, TV spot, try-on,
-  surreal/CGI, explainer, app demo (skill `marketing-studio` for the table).
-  Say it in plain words, never the slug.
-- An edit of a source clip states only the change (who or what replaces
-  what, new lines or captions); it keeps the source's shots, motion,
-  timing, and audio. No header, shot list, beats, camera moves, or location
-  on an edit: they describe a new video, and the model makes that one
-  instead of editing the clip. New speech or on-screen text is still
-  written out in full: each spoken line in quotes, in order, short enough
-  for the clip's length; subtitles are those same words; one text look
-  (`references/dialog.md`). Pass `enable_audio` only when the model
-  declares audio.
-- N variations = N separate prompts and N calls; `count` stays 1.
-
-## 4. Start the job
+## 5. Start the job
 
 How a job is started and paid depends on the host. Without a host rule, follow
 [references/submit.md](references/submit.md). Errors:

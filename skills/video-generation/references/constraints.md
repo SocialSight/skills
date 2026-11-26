@@ -1,40 +1,39 @@
 # Constraints
 
-Always re-read the selected model's `medias[]` via `models_explore(action="get", model_id=...)`. The numbers below are how to interpret that payload, with two models as worked examples.
+The limits are the selected model's own values: its `medias[]`, durations,
+and aspect ratios from `models_explore(action="get", model_id=...)`, or the
+values the host already gave you. This page is how to read them.
 
-## `counts_toward`
+## Start and end frames spend the image budget
 
-`start_image` and `end_image` consume the `reference_image` budget. They are not a free extra slot.
+`start_image` and `end_image` (one each at most) count against the
+reference image cap; they are not extra slots. The catalog marks this as
+`counts_toward: "reference_image"`.
 
-The catalog publishes this as `counts_toward: "reference_image"` on `start_frame` / `end_frame`. On **SEEDANCE_2_5** the rule the API enforces is:
+- **SEEDANCE_2_5:** reference images + start + end ≤ 30. One reference, a
+  start, and an end use 3, leaving 27 for `role: "image"`.
+- **VEO3_1:** `max_inputs: 3`. One reference, a start, and an end fill it.
 
-```
-#ref_image + #start_frame + #end_frame ≤ 30
-```
+The image cap is the `max` of `reference_image` in `medias[]`. Do not read
+it from `max_reference_inputs`: that counts every input (images, video,
+audio) and is 50 on Seedance 2.5.
 
-Start and end are max 1 each. Anchor + `start_image` + `end_image` uses 3 of 30, leaving 27 for `role: "image"`.
+## Seedance rejects very wide or very tall stills
 
-Do **not** use `max_reference_inputs` for this. On 2.5 that field is 50 and counts **all** inputs (images + video + audio), not just images. The image cap lives in `medias[]` under `name: "reference_image"` (`max: 30`).
+Seedance fails the **job**, often after a `job_id` exists, when a reference,
+start, or end still has a pixel aspect ratio outside **0.39–2.50** (a 2.66
+panorama, for example). This is the still's own shape, not
+`params.aspect_ratio`, and validation does not catch it. Leave that still
+out (and say so in `summary`), or ask for a crop closer to 9:16, 1:1, or
+16:9. Never resubmit the same media as it is.
 
-On **VEO3_1**, `max_inputs: 3`. Anchor + `start_image` + `end_image` saturates it. There is no leftover for extra `role: "image"` refs.
+## Durations are a list, not a range
 
-## Seedance reference image aspect ratio
+`[4, 6, 8]` does not mean 4 to 8: `5` is invalid on that model. An empty
+list means the model takes no `duration`: omit the field, never send the
+schema default of `5`.
 
-Seedance downloads each `role: "image"` / start / end still and rejects the
-**job** (often after `job_id` exists) when a still's pixel aspect ratio is
-outside **0.39–2.50** (`InvalidParameter` on `image_url`, e.g. a 2.66
-panorama). This is **not** the same as `params.aspect_ratio` (output frame).
-
-Catalog validate does **not** check still dimensions — submit can succeed
-and the provider fails later. If a ref is ultra-wide or ultra-tall,
-omit that media from `params.medias` (and say so in `summary`), or ask the
-user to re-upload a crop closer to 9:16 / 1:1 / 16:9. Do not resubmit the
-same medias as-is.
-
-## `supported_durations` is a discrete list
-
-Not a min/max range. `[4, 6, 8]` does **not** mean 4–8. `5` is invalid on that model (VEO3_1_LITE is this shape). Do not group, interpolate, or treat the endpoints as a span.
-
-If `durations` / `supported_durations` is `[]` (e.g. KLING_2_6_MOTION), the model takes no `duration` at all — omit the field. Do not send the schema default of `5`.
-
-If the user wants a length that is not in the list, round to the closest listed value and rewrite the timed beats so they sum to that length. Never send a number that is not in the list, and do not split one request into several clips to reach it — or pick a model that lists the length.
+A length the user wants that is not listed: use the closest listed value
+and rewrite the timed beats to sum to it, or pick a model that lists it.
+Never send an unlisted number, and never split one request into several
+clips to reach it.
