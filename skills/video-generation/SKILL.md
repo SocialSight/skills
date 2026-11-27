@@ -27,8 +27,9 @@ The video prompt is written in full: nothing downstream expands it.
   exact string the model lists.
 - Duration: seconds the user gives are the duration ("make it 15s",
   "longer, 15s" → 15, not "more than 15"). Use that value if the model
-  lists it, else the nearest listed one, and say so in one line. No length
-  given → a listed value near 8 seconds.
+  lists it, else the nearest listed one, and say so in one line. A new
+  video with no length given → a listed value near 8 seconds. An edit
+  keeps the clip's length.
 
 ## 2. New video, photo, or edit
 
@@ -50,8 +51,9 @@ Make one only when the user asks to see the video before it is made
   (skill `image-generation`, `references/storyboard.md`). Never one image
   per character.
 - The video comes after it is done. Bind it as `role: "image"` if the model
-  lists that role (it is a grid, never `start_image`). The video's beats
-  follow its panels, same order and seconds.
+  lists that role (it is a grid, never `start_image`). A new video's beats
+  follow its panels, same order and seconds. An edit keeps the clip's own
+  timing: the storyboard only shows who and what goes in.
 - A change they ask for is a new version of the storyboard, with every
   earlier change kept.
 
@@ -59,7 +61,8 @@ Make one only when the user asks to see the video before it is made
 
 Written as [references/dialog.md](references/dialog.md) sets out. In short:
 
-- English. The latest user message is the story.
+- English. The story is the video they asked for; a later message changes
+  only what it names.
 - Never name the model or use model-specific syntax (`@Image1`). Bound
   media is "the <name> from reference_N", never re-described. The model can
   change after the prompt is written.
@@ -72,7 +75,9 @@ Written as [references/dialog.md](references/dialog.md) sets out. In short:
   location: the model would make that video instead of editing the clip.
   New speech or on-screen text is written out in full: each line in quotes,
   in order, short enough for the clip; subtitles are those same words.
-- `enable_audio` only when the model declares audio.
+- `enable_audio` only when the model declares audio. They asked for a
+  voice or sound and it does not: say so in one line before starting, or
+  use a model with audio when they named none.
 - N variations are N prompts and N calls; `count` stays 1.
 
 ## 5. Start the job

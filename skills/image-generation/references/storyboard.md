@@ -37,7 +37,8 @@ The panels are the video they asked for, beat by beat, with the change
 applied ("the two fighters are now a Siamese and a calico cat"). Nobody
 can see the clip: build the panels from what they said and the photos they
 attached, and never invent what the clip looks like. Panel aspect = the
-clip's.
+clip's. The video keeps the clip's own timing and takes no beats or seconds
+from the panels: they show who and what goes in.
 
 ## Rules
 

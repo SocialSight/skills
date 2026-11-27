@@ -23,9 +23,10 @@ audio) and is 50 on Seedance 2.5.
 Seedance fails the **job**, often after a `job_id` exists, when a reference,
 start, or end still has a pixel aspect ratio outside **0.39–2.50** (a 2.66
 panorama, for example). This is the still's own shape, not
-`params.aspect_ratio`, and validation does not catch it. Leave that still
-out (and say so in `summary`), or ask for a crop closer to 9:16, 1:1, or
-16:9. Never resubmit the same media as it is.
+`params.aspect_ratio`, and validation does not catch it. When the video
+needs that still (the photo to animate, or its only reference), ask for a
+crop closer to 9:16, 1:1, or 16:9. Otherwise leave it out and say so in
+`summary`. Never resubmit the same media as it is.
 
 ## Durations are a list, not a range
 
@@ -34,6 +35,7 @@ list means the model takes no `duration`: omit the field, never send the
 schema default of `5`.
 
 A length the user wants that is not listed: use the closest listed value
-and rewrite the timed beats to sum to it, or pick a model that lists it.
+and rewrite the timed beats to sum to it, or, when they named no model,
+pick one that lists it.
 Never send an unlisted number, and never split one request into several
 clips to reach it.

@@ -11,19 +11,23 @@ are in English. The model's limits (durations, audio) come from
   unlisted number the user said.
 - **Beats:** 2–10, in whole seconds, in order. Inside a beat you may cut
   faster with decimal timecodes (a 3s beat = 0.6s + 0.4s + 2.0s).
-- **The story is the latest user message.** A product, brand, pitch, dance,
-  music, or line they named is the video: never replace it with what a
-  photo shows, and never describe the job as "animate the attached stills".
-  Every distinctive phrase of theirs appears in the prompt.
-- **Uploads are identity** (face, clothes, pack), not setting or plot.
+- **The story is the video the user asked for.** A later message changes
+  only what it names ("make it 9:16" keeps the story). A product, brand,
+  pitch, dance, music, or line they named is the video: never replace it
+  with what a photo shows, and never describe the job as "animate the
+  attached stills". Every distinctive phrase of theirs appears in the
+  prompt.
+- **Uploads are identity** (face, clothes, pack), not setting or plot,
+  unless they ask for the place in a photo.
   Match each by its kind and their words ("this bag" + one photo → the
   photo), never by upload order. Name it ("the bag from reference_1");
   never describe or redesign it.
 - **A screenshot** (app, website, chart, document) is an overlay, not a
   character: the beat says where it sits ("the listing from reference_2
-  slides in over her left shoulder") and what the presenter does with it.
-- **A storyboard they approved** is the plan: beats follow its panels, same
-  order and seconds.
+  slides in over her left shoulder") and what the presenter, if there is
+  one, does with it.
+- **A storyboard they approved** is the plan of a new video: beats follow
+  its panels, same order and seconds.
 - **A source video** (`role: "video"`) is an edit: it keeps its structure,
   motion, timing, and audio. The prompt states only the change ("make her
   jacket red"), never beats or a length. New lines or text are quoted in
@@ -48,8 +52,9 @@ From the user's words, else the mode's Sound column (`marketing-studio`
   pauses.
 - **music only:** nobody speaks. AUDIO ends with "No dialogue".
 - A line the user quoted is used **verbatim**: spoken, with narration or
-  dialogue; with music only, on screen as a TEXT: line (with no text look,
-  as one end-card TEXT: in the final beat).
+  dialogue (on screen instead when they asked for it as text only); with
+  music only, on screen as a TEXT: line (with no text look, as one end-card
+  TEXT: in the final beat).
 - Music and effects they named go in AUDIO (in the beats on SHORT). Under a
   voice the music stays quiet; add a click or whoosh when an overlay or a
   TEXT: lands. Set `enable_audio` only when the model supports audio.
@@ -141,7 +146,7 @@ CONTINUITY RULES: objects move only for an on-screen cause; no teleporting, dupl
 - Escalate beat to beat; the last beat is the biggest.
 - Two asks ("X, then at the end Y") are two acts inside the same beats.
 - "Three variations" are three calls and three distinct prompts with the
-  same timing; change only the talent, wardrobe, or setting asked for.
+  same timing; change only what they asked to vary.
 - Never leave the prompt empty or mood-only.
 - **End on a hold**, not a cut-away: the last image of the story stays on
   screen. An end card (title, slogan, logo lockup) is ad grammar. First
