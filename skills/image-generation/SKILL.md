@@ -15,10 +15,10 @@ full.
 
 ## Model
 
-- Default: **`GEMINI_NANO_BANANA_2_1`** (Nano Banana): most images and
-  edits, storyboards, and cast sheets.
-- **`SEEDREAM_5_5`**: photorealism (lifelike people, fashion, product
-  photos), when the user's plan allows it.
+- Default: **`SEEDREAM_5_5`**, when the user's plan allows it (paid plans).
+- **`GEMINI_NANO_BANANA_2_1`** (Nano Banana): the default on every other
+  plan, and for what Seedream does not take: 4K, or more than 10 photos in
+  one image.
 - A model the user named wins.
 - One `models_explore(action="get", model_id=...)` first, unless the host
   already gave you the model's values. Copy `quality` and `aspect_ratio`
